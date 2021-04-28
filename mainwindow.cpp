@@ -1,6 +1,6 @@
-#include <QBluetoothDeviceDiscoveryAgent>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "devices.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    auto d = Devices(parent).isBluetoothEnabled();
 }
 
 MainWindow::~MainWindow()
@@ -16,9 +17,5 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::Hello() {
-    auto m_deviceDiscoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
-    m_deviceDiscoveryAgent->setLowEnergyDiscoveryTimeout(5000);
-
-
 }
 
