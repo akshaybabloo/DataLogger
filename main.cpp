@@ -1,8 +1,35 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QDateTime>
+
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QByteArray localMsg = msg.toLocal8Bit();
+    QString dateTime = QDateTime::currentDateTime().toString();
+
+    switch (type) {
+        case QtDebugMsg:
+            fprintf(stderr, "%s - Debug: %s (%s:%u, %s)\n", dateTime.toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtInfoMsg:
+            fprintf(stderr, "%s - Info: %s (%s:%u, %s)\n", dateTime.toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtWarningMsg:
+            fprintf(stderr, "%s - Warning: %s (%s:%u, %s)\n", dateTime.toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtCriticalMsg:
+            fprintf(stderr, "%s - Critical: %s (%s:%u, %s)\n", dateTime.toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtFatalMsg:
+            fprintf(stderr, "%s - Fatal: %s (%s:%u, %s)\n", dateTime.toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
+            abort();
+    }
+}
 
 int main(int argc, char *argv[]) {
+    qInstallMessageHandler(myMessageOutput);
+
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication a(argc, argv);
     MainWindow w;
