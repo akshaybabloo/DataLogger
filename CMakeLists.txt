@@ -24,21 +24,21 @@ set(PROJECT_SOURCES
         mainwindow.ui
         devices.cpp devices.h)
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DataLogger
-        ${PROJECT_SOURCES}
-    )
-else()
-    if(ANDROID)
+            ${PROJECT_SOURCES}
+            )
+else ()
+    if (ANDROID)
         add_library(DataLogger SHARED
-            ${PROJECT_SOURCES}
-        )
-    else()
+                ${PROJECT_SOURCES}
+                )
+    else ()
         add_executable(DataLogger
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+                ${PROJECT_SOURCES}
+                )
+    endif ()
+endif ()
 
 target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
