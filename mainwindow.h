@@ -1,3 +1,7 @@
+/**
+ * This is an entry window
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -14,6 +18,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
 
     ~MainWindow() override;
+
+private slots:
+    void removeItem(const QString &text);
 
 private:
     Ui::MainWindow *ui;

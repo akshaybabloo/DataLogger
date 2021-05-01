@@ -18,10 +18,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        mainwindow.cpp mainwindow.h mainwindow.ui
+        widgets/listwidget.cpp widgets/listwidget.h widgets/listwidget.ui
         devices.cpp devices.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
