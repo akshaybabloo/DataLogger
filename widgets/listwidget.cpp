@@ -5,7 +5,7 @@ ListWidget::ListWidget(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::ListWidget) {
     ui->setupUi(this);
-    connect(this, SIGNAL(sendRemoveItem(const QString &)), parent, SLOT(removeItem(const QString &)));
+    connect(this, SIGNAL(sendRemoveItem(QString)), parent, SLOT(openLogger(QString)));
 }
 
 ListWidget::~ListWidget() {
