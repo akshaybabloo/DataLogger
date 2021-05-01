@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->listWidget->setItemWidget(item, widget);
     }
 
-
 }
 
 MainWindow::~MainWindow() {
@@ -30,9 +29,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::openLogger(const QString &text) {
-
-
-
+    
     for (int i = 0; i < ui->listWidget->count(); ++i) {
         auto item = ui->listWidget->item(i);
         auto itemWidget = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item));
@@ -42,7 +39,7 @@ void MainWindow::openLogger(const QString &text) {
             auto datalogger = new Logger();
             datalogger->show();
 
-//            this->close();
+            this->close();
             break;
         }
     }
