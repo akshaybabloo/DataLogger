@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "devices.h"
+#include "logger.h"
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -28,13 +29,17 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::removeItem(const QString &text) {
+void MainWindow::openLogger(const QString &text) {
+
+    auto datalogger = new Logger();
 
     for (int i = 0; i < ui->listWidget->count(); ++i) {
         auto item = ui->listWidget->item(i);
         auto itemWidget = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item));
         if (itemWidget->getText() == text) {
             delete item;
+            datalogger->show();
+            this->close();
             break;
         }
     }

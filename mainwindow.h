@@ -21,7 +21,7 @@ public:
 
 private slots:
 
-    void removeItem(const QString &text);
+    void openLogger(const QString &text);
 
 private:
     Ui::MainWindow *ui;

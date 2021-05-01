@@ -19,6 +19,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp mainwindow.h mainwindow.ui
+        logger.cpp logger.h logger.ui
         widgets/listwidget.cpp widgets/listwidget.h widgets/listwidget.ui
         devices.cpp devices.h)
 
