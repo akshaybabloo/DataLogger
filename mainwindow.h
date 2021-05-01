@@ -15,8 +15,6 @@ public:
 
     ~MainWindow() override;
 
-    void Hello();
-
 private:
     Ui::MainWindow *ui;
 };
