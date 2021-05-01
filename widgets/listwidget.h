@@ -20,9 +20,11 @@ public:
     QString getText();
 
 signals:
+
     void sendRemoveItem(const QString &text);
 
 private slots:
+
     void on_toolButton_clicked();
 
 private:

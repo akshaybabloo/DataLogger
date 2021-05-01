@@ -20,6 +20,7 @@ public:
     ~MainWindow() override;
 
 private slots:
+
     void removeItem(const QString &text);
 
 private:
