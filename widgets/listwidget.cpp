@@ -5,7 +5,6 @@ ListWidget::ListWidget(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::ListWidget) {
     ui->setupUi(this);
-    connect(this, SIGNAL(sendRemoveItem(QString)), parent, SLOT(openLogger(QString)));
 }
 
 ListWidget::~ListWidget() {
@@ -14,10 +13,6 @@ ListWidget::~ListWidget() {
 
 void ListWidget::setText(const QString &text) {
     ui->label->setText(text);
-}
-
-void ListWidget::on_toolButton_clicked() {
-    emit sendRemoveItem(ui->label->text());
 }
 
 QString ListWidget::getText() {

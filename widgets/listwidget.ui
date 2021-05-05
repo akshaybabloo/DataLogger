@@ -34,13 +34,6 @@
      </property>
     </spacer>
    </item>
-   <item>
-    <widget class="QToolButton" name="toolButton">
-     <property name="text">
-      <string>&gt;</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <resources/>

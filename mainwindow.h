@@ -6,6 +6,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,7 +22,12 @@ public:
 
 private slots:
 
-    void openLogger(const QString &text);
+    /**
+     * When an item list is double clicked, this method is invoked.
+     *
+     * @param item An widget item
+     */
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
