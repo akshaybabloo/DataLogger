@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>CFBundleDocumentTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleTypeIconFile</key>
+                <string>datalogger.icns</string>
+                <key>CFBundleTypeName</key>
+                <string>DataLogger</string>
+                <key>CFBundleTypeRole</key>
+                <string>Viewer</string>
+                <key>LSIsAppleDefaultForType</key>
+                <true/>
+            </dict>
+        </array>
+        <key>CFBundleIconFile</key>
+        <string>datalogger.icns</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>NSPrincipalClass</key>
+        <string>NSApplication</string>
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        <key>CFBundleExecutable</key>
+        <string>datalogger</string>
+        <key>NSHumanReadableCopyright</key>
+        <string>Copyright (c) 2021, Akshay Raj Gollahalli</string>
+        <key>CFBundleIdentifier</key>
+        <string>datalogger</string>
+        <key>CFBundleName</key>
+        <string>DataLogger</string>
+        <key>CFBundleShortVersionString</key>
+        <string>3.1.2</string>
+        <key>AppleMagnifiedMode</key>
+        <false/>
+    </dict>
+</plist>

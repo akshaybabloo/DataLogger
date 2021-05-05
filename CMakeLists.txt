@@ -18,13 +18,33 @@ if ($ENV{CLION_IDE})
     endif()
 endif ()
 
+if (APPLE)
+    set(MACOSX_BUNDLE_ICON_FILE datalogger.icns)
+    # And the following tells CMake where to find and install the file itself.
+    set(app_icon_macos "resources/images/datalogger.icns")
+    set_source_files_properties(${app_icon_macos} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
+endif ()
+
+if (WIN32)
+    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/win.rc")
+endif ()
+
 find_package(QT NAMES Qt5 COMPONENTS Widgets Bluetooth Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 
 set(PROJECT_SOURCES
+        MACOSX_BUNDLE
+
         main.cpp
+
+        resources.qrc
+
+        ${app_icon_macos}
+        ${APP_ICON_RESOURCE_WINDOWS}
+
         mainwindow.cpp mainwindow.h mainwindow.ui
         logger.cpp logger.h logger.ui
         widgets/listwidget.cpp widgets/listwidget.h widgets/listwidget.ui
@@ -45,6 +65,8 @@ else ()
                 )
     endif ()
 endif ()
+
+set_property(TARGET DataLogger PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
 target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets

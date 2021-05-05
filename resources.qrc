@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="datalogger.icns">resources/images/datalogger.icns</file>
+        <file alias="datalogger.ico">resources/images/datalogger.ico</file>
+        <file alias="datalogger.png">resources/images/datalogger.png</file>
+    </qresource>
+</RCC>
