@@ -11,6 +11,13 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if ($ENV{CLION_IDE})
+    if(WIN32)
+        # Note: This path needs to be update on every new Qt version
+        set(CMAKE_PREFIX_PATH C:/Qt/5.15.2/msvc2019_64)
+    endif()
+endif ()
+
 find_package(QT NAMES Qt5 COMPONENTS Widgets Bluetooth Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
