@@ -1,4 +1,4 @@
-IDI_ICON1               ICON    DISCARDABLE     "datalogger.ico"
+IDI_ICON1               ICON    DISCARDABLE     "resources/images/datalogger.ico"
 
 
 1 VERSIONINFO
