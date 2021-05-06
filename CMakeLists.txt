@@ -41,6 +41,7 @@ set(PROJECT_SOURCES
         main.cpp
 
         resources.qrc
+        style.qrc
 
         ${app_icon_macos}
         ${APP_ICON_RESOURCE_WINDOWS}
