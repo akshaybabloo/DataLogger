@@ -10,7 +10,7 @@ IDI_ICON1               ICON    DISCARDABLE     "datalogger.ico"
         BLOCK "000004B0"
         {
             VALUE "CompanyName",        "DataLogger\0"
-            VALUE "FileDescription",    "EEG and EMG data logger\0"
+            VALUE "FileDescription",    "DataLogger\0"
             VALUE "FileVersion",        "git\0"
             VALUE "OriginalFilename",   "datalogger.exe\0"
             VALUE "ProductName",        "DataLogger\0"
