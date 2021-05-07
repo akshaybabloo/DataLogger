@@ -12,11 +12,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ($ENV{CLION_IDE})
+    # Note: This path needs to be update on every new Qt version
     if(WIN32)
-        # Note: This path needs to be update on every new Qt version
         set(CMAKE_PREFIX_PATH C:/Qt/5.15.2/msvc2019_64)
+    elseif(APPLE)
+        set(CMAKE_PREFIX_PATH /Users/akshayrajgollahalli/Qt/5.15.2/clang_64)
     endif()
-endif ()
+endif()
 
 if (APPLE)
     set(MACOSX_BUNDLE_ICON_FILE datalogger.icns)
