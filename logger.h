@@ -2,6 +2,9 @@
 #define LOGGER_H
 
 #include <QMainWindow>
+#include <QtCharts>
+
+using namespace QtCharts;
 
 namespace Ui {
 class Logger;
