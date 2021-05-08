@@ -32,11 +32,12 @@ if (WIN32)
     set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/win.rc")
 endif ()
 
-find_package(QT NAMES Qt5 COMPONENTS Widgets Bluetooth Network Charts REQUIRED)
+find_package(QT NAMES Qt5 COMPONENTS Widgets Bluetooth Network Charts Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Charts REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 
 set(PROJECT_SOURCES
         MACOSX_BUNDLE
@@ -81,4 +82,5 @@ target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Charts
         Qt${QT_VERSION_MAJOR}::Bluetooth
         Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Gui
         )
