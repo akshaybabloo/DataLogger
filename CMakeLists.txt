@@ -51,8 +51,12 @@ set(PROJECT_SOURCES
 
         mainwindow.cpp mainwindow.h mainwindow.ui
         logger.cpp logger.h logger.ui
+        settings.cpp settings.h settings.ui
+
         widgets/listwidget.cpp widgets/listwidget.h widgets/listwidget.ui
-        devices.cpp devices.h)
+
+        devices.cpp devices.h
+        )
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DataLogger

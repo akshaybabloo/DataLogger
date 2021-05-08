@@ -29,6 +29,11 @@ private slots:
      */
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
+    /**
+     * Opens setting window
+     */
+    void on_actionSettings_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

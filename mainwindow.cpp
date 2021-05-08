@@ -4,6 +4,7 @@
 #include "./ui_mainwindow.h"
 #include "devices.h"
 #include "logger.h"
+#include "settings.h"
 #include<QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -39,3 +40,9 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 
     this->close();
 }
+void MainWindow::on_actionSettings_triggered()
+{
+    auto settingsWindow = new Settings(this);
+    settingsWindow->show();
+}
+
