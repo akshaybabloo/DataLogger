@@ -2,6 +2,7 @@
 #include "ui_logger.h"
 #include <QLineSeries>
 #include "widgets/settingswidget.h"
+#include "widgets/statusbarindicator.h"
 
 Logger::Logger(QWidget *parent) :
         QMainWindow(parent),
@@ -28,6 +29,7 @@ Logger::Logger(QWidget *parent) :
 
     ui->rightLayout->addWidget(chartView);
 
+    ui->statusbar->addWidget(new StatusBarIndicator, 1);
 }
 
 Logger::~Logger() {

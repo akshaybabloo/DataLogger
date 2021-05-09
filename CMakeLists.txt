@@ -55,6 +55,7 @@ set(PROJECT_SOURCES
 
         widgets/listwidget.cpp widgets/listwidget.h widgets/listwidget.ui
         widgets/settingswidget.cpp widgets/settingswidget.h widgets/settingswidget.ui
+        widgets/statusbarindicator.cpp widgets/statusbarindicator.h widgets/statusbarindicator.ui
 
         devices.cpp devices.h
         )
