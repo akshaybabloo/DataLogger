@@ -5,6 +5,7 @@
     <file>{{ file }}</file>{% endfor %}
 </qresource>
 <qresource>
-    <file>style.qss</file>
+    <file>style-dark.qss</file>
+    <file>style-light.qss</file>
 </qresource>
 </RCC>

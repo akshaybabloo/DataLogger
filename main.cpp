@@ -3,7 +3,9 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QFile>
-#include <qtextstream.h>
+#include <QSettings>
+#include <QTextStream>
+#include <QDebug>
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     QByteArray localMsg = msg.toLocal8Bit();
@@ -36,18 +38,33 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 int main(int argc, char *argv[]) {
     qInstallMessageHandler(myMessageOutput);
 
-    QFile f(":style.qss");
+    QCoreApplication::setOrganizationName("Gollahalli");
+    QCoreApplication::setOrganizationDomain("gollahalli.com");
+    QCoreApplication::setApplicationName("DataLogger");
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
 
-    if (!f.exists())   {
-        printf("Unable to set stylesheet, file not found\n");
-    }
-    else   {
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
+    QSettings settings;
+    qInfo() << settings.fileName();
+    auto theme = settings.value("theme", "dark").toString();
+    qInfo() << theme;
+
+    if (theme == "dark") {
+        QFile darkTheme(":style-dark.qss");
+        darkTheme.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&darkTheme);
+        a.setStyleSheet(ts.readAll());
+    } else if (theme == "light") {
+        QFile light(":style-light.qss");
+        light.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&light);
+        a.setStyleSheet(ts.readAll());
+    } else {
+        QFile light(":style-light.qss");
+        light.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&light);
         a.setStyleSheet(ts.readAll());
     }
 
