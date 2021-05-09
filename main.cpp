@@ -47,9 +47,7 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     QSettings settings;
-    qInfo() << settings.fileName();
     auto theme = settings.value("theme", "dark").toString();
-    qInfo() << theme;
 
     if (theme == "dark") {
         QFile darkTheme(":style-dark.qss");
@@ -68,7 +66,6 @@ int main(int argc, char *argv[]) {
         a.setStyleSheet(ts.readAll());
     }
 
-//    QApplication::setStyle("Fusion");
     MainWindow w;
     w.setWindowTitle(QString("DataLogger"));
     w.setWindowIcon(QIcon(":/images/datalogger.png"));
