@@ -36,7 +36,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 int main(int argc, char *argv[]) {
     qInstallMessageHandler(myMessageOutput);
 
-    QFile f(":qdarkstyle/dark/style.qss");
+    QFile f(":style.qss");
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
