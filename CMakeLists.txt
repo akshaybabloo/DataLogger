@@ -52,9 +52,9 @@ set(PROJECT_SOURCES
 
         mainwindow.cpp mainwindow.h mainwindow.ui
         logger.cpp logger.h logger.ui
-        settings.cpp settings.h settings.ui
 
         widgets/listwidget.cpp widgets/listwidget.h widgets/listwidget.ui
+        widgets/settingswidget.cpp widgets/settingswidget.h widgets/settingswidget.ui
 
         devices.cpp devices.h
         )
