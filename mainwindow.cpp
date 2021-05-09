@@ -30,8 +30,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
-{
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
     auto macId = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText();
 
     auto datalogger = new Logger();
@@ -40,8 +39,8 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 
     this->close();
 }
-void MainWindow::on_actionSettings_triggered()
-{
+
+void MainWindow::on_actionSettings_triggered() {
     auto settingsWindow = new SettingsWidget(this);
     settingsWindow->setWindowFlag(Qt::Tool);
     settingsWindow->setAttribute(Qt::WA_DeleteOnClose);

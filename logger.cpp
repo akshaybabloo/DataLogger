@@ -4,9 +4,8 @@
 #include "widgets/settingswidget.h"
 
 Logger::Logger(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Logger)
-{
+        QMainWindow(parent),
+        ui(new Ui::Logger) {
     ui->setupUi(this);
 
     auto *series = new QLineSeries();
@@ -31,13 +30,11 @@ Logger::Logger(QWidget *parent) :
 
 }
 
-Logger::~Logger()
-{
+Logger::~Logger() {
     delete ui;
 }
 
-void Logger::on_actionSettings_triggered()
-{
+void Logger::on_actionSettings_triggered() {
     auto settingsWindow = new SettingsWidget(this);
     settingsWindow->setWindowFlag(Qt::Tool);
     settingsWindow->setAttribute(Qt::WA_DeleteOnClose);

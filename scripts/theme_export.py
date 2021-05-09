@@ -1,6 +1,6 @@
 import os
-from shutil import rmtree
 from pathlib import Path
+from shutil import rmtree
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from qt_material import export_theme

@@ -7,18 +7,19 @@
 using namespace QtCharts;
 
 namespace Ui {
-class Logger;
+    class Logger;
 }
 
-class Logger : public QMainWindow
-{
-    Q_OBJECT
+class Logger : public QMainWindow {
+Q_OBJECT
 
 public:
     explicit Logger(QWidget *parent = nullptr);
+
     ~Logger();
 
 private slots:
+
     void on_actionSettings_triggered();
 
 private:
