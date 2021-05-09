@@ -18,6 +18,9 @@ public:
     explicit Logger(QWidget *parent = nullptr);
     ~Logger();
 
+private slots:
+    void on_actionSettings_triggered();
+
 private:
     Ui::Logger *ui;
 };
