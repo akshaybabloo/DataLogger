@@ -13,13 +13,14 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     xIcon.load(":/images/x-icon.svg");
     errorIcon.load(":/images/error-icon.svg");
 
-    ui->bluetoothStatus->setPixmap(checkIcon.scaledToHeight(10, Qt::SmoothTransformation));
-    ui->bluetoothStatus->setToolTip(tr("test"));
-
     ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
     ui->serverStatus->setToolTip(tr("server not running"));
 
     ui->serverStatusLabel->clear();
+
+    auto *device = new QBluetoothLocalDevice(this);
+    connect(device, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);
+    bluetoothStatus(device->hostMode());
 }
 
 StatusBarIndicator::~StatusBarIndicator() {
@@ -27,7 +28,7 @@ StatusBarIndicator::~StatusBarIndicator() {
 }
 
 void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
-    if (text == ""){
+    if (text == "") {
         ui->serverStatusLabel->clear();
         ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->serverStatus->setToolTip(tr("server not running"));
@@ -35,5 +36,16 @@ void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
         ui->serverStatusLabel->setText(text);
         ui->serverStatus->setPixmap(checkIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->serverStatus->setToolTip(tr("server running"));
+    }
+}
+
+void StatusBarIndicator::bluetoothStatus(QBluetoothLocalDevice::HostMode state) {
+    qInfo() << state;
+    if (state == QBluetoothLocalDevice::HostPoweredOff) {
+        ui->bluetoothStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
+        ui->bluetoothStatus->setToolTip(tr("Bluetooth device not found"));
+    } else {
+        ui->bluetoothStatus->setPixmap(checkIcon.scaledToHeight(10, Qt::SmoothTransformation));
+        ui->bluetoothStatus->setToolTip(tr("Bluetooth enabled"));
     }
 }

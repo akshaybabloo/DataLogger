@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPixmap>
+#include <QBluetoothLocalDevice>
 
 namespace Ui {
 class StatusBarIndicator;
@@ -18,6 +19,7 @@ public:
 
 public slots:
     void receiveServerStatusLabel(const QString &text);
+    void bluetoothStatus(QBluetoothLocalDevice::HostMode state);
 
 private:
     QPixmap checkIcon;
