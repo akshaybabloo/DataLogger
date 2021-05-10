@@ -31,7 +31,6 @@ Logger::Logger(QWidget *parent) :
 
 
     auto theme = settings.value("theme", "light").toString();
-    qInfo() << theme;
     if (theme == "dark") {
         chartView->chart()->setTheme(QtCharts::QChart::ChartThemeDark);
     }
