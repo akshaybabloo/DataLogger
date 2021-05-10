@@ -1,6 +1,7 @@
 #include "statusbarindicator.h"
 #include "ui_statusbarindicator.h"
 #include <QIcon>
+#include <QDebug>
 
 StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     QWidget(parent),
@@ -14,9 +15,14 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
 
     ui->serverStatus->setPixmap(bleCheck.scaledToHeight(10, Qt::SmoothTransformation));
 
+    ui->serverStatusLabel->setText("");
 }
 
 StatusBarIndicator::~StatusBarIndicator()
 {
     delete ui;
+}
+
+void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
+    qInfo() << text;
 }

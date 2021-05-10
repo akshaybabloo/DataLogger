@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>151</width>
+    <width>229</width>
     <height>26</height>
    </rect>
   </property>
@@ -38,6 +38,13 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="serverStatusLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="serverStatus">

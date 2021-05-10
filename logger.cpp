@@ -3,6 +3,7 @@
 #include <QLineSeries>
 #include "widgets/settingswidget.h"
 #include "widgets/statusbarindicator.h"
+#include <QDebug>
 
 Logger::Logger(QWidget *parent) :
         QMainWindow(parent),
@@ -30,6 +31,9 @@ Logger::Logger(QWidget *parent) :
     ui->rightLayout->addWidget(chartView);
 
     ui->statusbar->addWidget(new StatusBarIndicator, 1);
+
+    auto *indicator = new StatusBarIndicator;
+    connect(this, &Logger::emitServerStatusLabel, indicator, &StatusBarIndicator::receiveServerStatusLabel);
 }
 
 Logger::~Logger() {
@@ -43,3 +47,11 @@ void Logger::on_actionSettings_triggered() {
     settingsWindow->show();
 }
 
+void Logger::on_serverButton_toggled(bool checked)
+{
+    if (checked){
+        emit emitServerStatusLabel("server running on 127.0.0.1:1000");
+    } else {
+        emit emitServerStatusLabel("");
+    }
+}

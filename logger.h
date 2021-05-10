@@ -22,6 +22,11 @@ private slots:
 
     void on_actionSettings_triggered();
 
+    void on_serverButton_toggled(bool checked);
+
+signals:
+    void emitServerStatusLabel(const QString &text);
+
 private:
     Ui::Logger *ui;
 };

@@ -15,6 +15,9 @@ public:
     explicit StatusBarIndicator(QWidget *parent = nullptr);
     ~StatusBarIndicator();
 
+public slots:
+    void receiveServerStatusLabel(const QString &text);
+
 private:
     Ui::StatusBarIndicator *ui;
 };
