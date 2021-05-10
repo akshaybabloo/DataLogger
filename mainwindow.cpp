@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "widgets/settingswidget.h"
 #include<QDebug>
+#include "widgets/aboutwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -45,5 +46,14 @@ void MainWindow::on_actionSettings_triggered() {
     settingsWindow->setWindowFlag(Qt::Tool);
     settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
     settingsWindow->show();
+}
+
+
+void MainWindow::on_actionAbout_DataLogger_triggered()
+{
+    auto about = new AboutWidget(this);
+    about->setWindowFlag(Qt::Tool);
+    about->setAttribute(Qt::WA_DeleteOnClose);
+    about->show();
 }
 

@@ -49,6 +49,7 @@
      <string>About</string>
     </property>
     <addaction name="actionSettings"/>
+    <addaction name="actionAbout_DataLogger"/>
    </widget>
    <addaction name="menuAbout"/>
   </widget>
@@ -56,6 +57,11 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionAbout_DataLogger">
+   <property name="text">
+    <string>About DataLogger</string>
    </property>
   </action>
  </widget>
