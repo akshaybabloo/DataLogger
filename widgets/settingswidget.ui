@@ -16,23 +16,39 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
-     <widget class="QWidget" name="themeTab">
+     <widget class="QWidget" name="uiTab">
       <attribute name="title">
        <string>Tab 1</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QRadioButton" name="lightButton">
-         <property name="text">
-          <string>Light</string>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Theme</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="darkButton">
-         <property name="text">
-          <string>Dark</string>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="nativeButton">
+            <property name="text">
+             <string>Native</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="lightButton">
+            <property name="text">
+             <string>Light</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="darkButton">
+            <property name="text">
+             <string>Dark</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -50,6 +66,13 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>

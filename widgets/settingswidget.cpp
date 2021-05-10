@@ -8,7 +8,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
         ui(new Ui::SettingsWidget) {
     ui->setupUi(this);
 
-    ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->themeTab), QString("Theme"));
+    ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->uiTab), tr("UI"));
 
     auto theme = settings.value("theme", "light").toString();
 
@@ -16,6 +16,8 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
         ui->darkButton->setChecked(true);
     } else if (theme == "light") {
         ui->lightButton->setChecked(true);
+    } else if (theme == "native") {
+        ui->nativeButton->setChecked(true);
     } else {
         ui->lightButton->setChecked(true);
     }
@@ -36,6 +38,8 @@ void SettingsWidget::on_buttonBox_accepted() {
         settings.setValue("theme", "dark");
     } else if (ui->lightButton->isChecked()) {
         settings.setValue("theme", "light");
+    } else if (ui->nativeButton->isChecked()) {
+        settings.setValue("theme", "native");
     } else {
         settings.setValue("theme", "light");
     }

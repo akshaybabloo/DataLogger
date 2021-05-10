@@ -59,6 +59,8 @@ int main(int argc, char *argv[]) {
         light.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&light);
         a.setStyleSheet(ts.readAll());
+    } else if (theme == "native") {
+        // do nothing
     } else {
         QFile light(":style-light.qss");
         light.open(QFile::ReadOnly | QFile::Text);
