@@ -9,10 +9,10 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     ui->setupUi(this);
     QPixmap bleCheck(":/images/check-icon.svg");
 
-    ui->bluetoothStatus->setPixmap(bleCheck.scaled(10,10, Qt::KeepAspectRatio));
+    ui->bluetoothStatus->setPixmap(bleCheck.scaledToHeight(10, Qt::SmoothTransformation));
     ui->bluetoothStatus->setToolTip(tr("test"));
 
-    ui->serverStatus->setPixmap(bleCheck.scaled(10,10, Qt::KeepAspectRatio));
+    ui->serverStatus->setPixmap(bleCheck.scaledToHeight(10, Qt::SmoothTransformation));
 
 }
 
