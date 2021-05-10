@@ -18,6 +18,8 @@ Logger::Logger(QWidget *parent) :
     series->append(10, 5);
     *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 
+    series->setUseOpenGL(true);
+
     auto *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
