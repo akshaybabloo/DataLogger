@@ -49,8 +49,10 @@ void Logger::on_actionSettings_triggered() {
 void Logger::on_serverButton_toggled(bool checked)
 {
     if (checked){
+        ui->serverButton->setText("Stop Server");
         emit emitServerStatusLabel("server running on 127.0.0.1:1000");
     } else {
+        ui->serverButton->setText("Start Server");
         emit emitServerStatusLabel("");
     }
 }
