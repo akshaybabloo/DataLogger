@@ -30,9 +30,8 @@ Logger::Logger(QWidget *parent) :
 
     ui->rightLayout->addWidget(chartView);
 
-    ui->statusbar->addPermanentWidget(new StatusBarIndicator, 1);
-
-    auto *indicator = new StatusBarIndicator;
+    auto *indicator = new StatusBarIndicator(this);
+    ui->statusbar->addPermanentWidget(indicator, 1);
     connect(this, &Logger::emitServerStatusLabel, indicator, &StatusBarIndicator::receiveServerStatusLabel);
 }
 
