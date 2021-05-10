@@ -2,6 +2,7 @@
 #define STATUSBARINDICATOR_H
 
 #include <QWidget>
+#include <QPixmap>
 
 namespace Ui {
 class StatusBarIndicator;
@@ -19,6 +20,9 @@ public slots:
     void receiveServerStatusLabel(const QString &text);
 
 private:
+    QPixmap checkIcon;
+    QPixmap xIcon;
+    QPixmap errorIcon;
     Ui::StatusBarIndicator *ui;
 };
 

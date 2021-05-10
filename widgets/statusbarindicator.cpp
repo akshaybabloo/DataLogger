@@ -4,26 +4,36 @@
 #include <QDebug>
 
 StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::StatusBarIndicator)
-{
+        QWidget(parent),
+        ui(new Ui::StatusBarIndicator) {
     ui->setupUi(this);
-    QPixmap bleCheck(":/images/check-icon.svg");
 
-    ui->bluetoothStatus->setPixmap(bleCheck.scaledToHeight(10, Qt::SmoothTransformation));
+    // load default icons
+    checkIcon.load(":/images/check-icon.svg");
+    xIcon.load(":/images/x-icon.svg");
+    errorIcon.load(":/images/error-icon.svg");
+
+    ui->bluetoothStatus->setPixmap(checkIcon.scaledToHeight(10, Qt::SmoothTransformation));
     ui->bluetoothStatus->setToolTip(tr("test"));
 
-    ui->serverStatus->setPixmap(bleCheck.scaledToHeight(10, Qt::SmoothTransformation));
+    ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
+    ui->serverStatus->setToolTip(tr("server not running"));
 
-    ui->serverStatusLabel->setText("");
+    ui->serverStatusLabel->clear();
 }
 
-StatusBarIndicator::~StatusBarIndicator()
-{
+StatusBarIndicator::~StatusBarIndicator() {
     delete ui;
 }
 
 void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
-    qInfo() << text;
-    ui->serverStatusLabel->setText(text);
+    if (text == ""){
+        ui->serverStatusLabel->clear();
+        ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
+        ui->serverStatus->setToolTip(tr("server not running"));
+    } else {
+        ui->serverStatusLabel->setText(text);
+        ui->serverStatus->setPixmap(checkIcon.scaledToHeight(10, Qt::SmoothTransformation));
+        ui->serverStatus->setToolTip(tr("server running"));
+    }
 }
