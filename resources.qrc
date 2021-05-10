@@ -3,5 +3,7 @@
         <file alias="datalogger.icns">resources/images/datalogger.icns</file>
         <file alias="datalogger.ico">resources/images/datalogger.ico</file>
         <file alias="datalogger.png">resources/images/datalogger.png</file>
+        <file alias="check-icon.svg">resources/images/check-icon.svg</file>
+        <file alias="error-icon.svg">resources/images/error-icon.svg</file>
     </qresource>
 </RCC>
