@@ -25,4 +25,5 @@ StatusBarIndicator::~StatusBarIndicator()
 
 void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
     qInfo() << text;
+    ui->serverStatusLabel->setText(text);
 }
