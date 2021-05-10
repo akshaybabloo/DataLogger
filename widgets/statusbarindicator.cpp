@@ -16,7 +16,7 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
     ui->serverStatus->setToolTip(tr("server not running"));
 
-    ui->serverStatusLabel->clear();
+    ui->serverStatusLabel->setText("");
 
     auto *device = new QBluetoothLocalDevice(this);
     connect(device, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);
@@ -29,7 +29,7 @@ StatusBarIndicator::~StatusBarIndicator() {
 
 void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
     if (text == "") {
-        ui->serverStatusLabel->clear();
+        ui->serverStatusLabel->setText("");
         ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->serverStatus->setToolTip(tr("server not running"));
     } else {
