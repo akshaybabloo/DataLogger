@@ -26,7 +26,13 @@ Logger::Logger(QWidget *parent) :
 
     auto *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->chart()->setTheme(QtCharts::QChart::ChartThemeDark);
+
+
+    auto theme = settings.value("theme", "light").toString();
+    qInfo() << theme;
+    if (theme == "dark") {
+        chartView->chart()->setTheme(QtCharts::QChart::ChartThemeDark);
+    }
 
     ui->rightLayout->addWidget(chartView);
 

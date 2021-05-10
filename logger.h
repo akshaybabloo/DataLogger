@@ -28,6 +28,8 @@ signals:
     void emitServerStatusLabel(const QString &text);
 
 private:
+    QSettings settings;
+
     Ui::Logger *ui;
 };
 

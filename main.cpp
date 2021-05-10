@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     QSettings settings;
-    auto theme = settings.value("theme", "dark").toString();
+    auto theme = settings.value("theme", "light").toString();
 
     if (theme == "dark") {
         QFile darkTheme(":style-dark.qss");
