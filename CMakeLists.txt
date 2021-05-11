@@ -67,15 +67,9 @@ if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
             ${PROJECT_SOURCES}
             )
 else ()
-    if (ANDROID)
-        add_library(DataLogger SHARED
-                ${PROJECT_SOURCES}
-                )
-    else ()
-        add_executable(DataLogger
-                ${PROJECT_SOURCES}
-                )
-    endif ()
+    add_executable(DataLogger
+            ${PROJECT_SOURCES}
+            )
 endif ()
 
 set_property(TARGET DataLogger PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
@@ -87,3 +81,7 @@ target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Gui
         )
+
+if (QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(DataLogger)
+endif ()
