@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(DataLogger LANGUAGES CXX)
+project(DataLogger VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ($ENV{CLION_IDE})
+    set(QT_VERSION_MAJOR 5)
     # Note: This path needs to be update on every new Qt version
     if (WIN32)
         set(CMAKE_PREFIX_PATH C:/Qt/5.15.2/msvc2019_64)
@@ -32,7 +33,7 @@ if (WIN32)
     set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/win.rc")
 endif ()
 
-find_package(QT NAMES Qt5 COMPONENTS Widgets Bluetooth Network Charts Gui REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Bluetooth Network Charts Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
