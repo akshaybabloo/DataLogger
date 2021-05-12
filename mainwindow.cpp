@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->addPermanentWidget(indicator, 1);
 
     discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
+    discoveryAgent->start();
+
+    // whenever a device is discovered, this signal is triggered
+    connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, &MainWindow::addDevice);
 
 }
 
@@ -66,5 +70,22 @@ void MainWindow::on_actionAbout_DataLogger_triggered() {
 void MainWindow::slotReboot() {
     qDebug() << "Performing application reboot...";
     qApp->exit(MainWindow::EXIT_CODE_REBOOT);
+}
+
+void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
+    QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
+    QList<QListWidgetItem *> items = ui->listWidget->findItems(label, Qt::MatchExactly | Qt::MatchRecursive);
+    // TODO: this will always return true because of the custom widget. Search by ListWidget and then filter it.
+    if (items.empty()) {
+        auto item = new QListWidgetItem();
+
+        auto widget = new ListWidget(this);
+        widget->setText(label);
+
+        item->setSizeHint(widget->sizeHint());
+
+        ui->listWidget->addItem(item);
+        ui->listWidget->setItemWidget(item, widget);
+    }
 }
 

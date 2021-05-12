@@ -46,6 +46,13 @@ private slots:
 private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;
 
+    /**
+     * This method is triggered when a new device is found, then the device will be added to the list.
+     *
+     * @param info device information
+     */
+    void addDevice(const QBluetoothDeviceInfo &info);
+
     Ui::MainWindow *ui;
 };
 
