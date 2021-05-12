@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <QListWidgetItem>
+#include <QBluetoothDeviceDiscoveryAgent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,7 +44,7 @@ private slots:
     void on_actionAbout_DataLogger_triggered();
 
 private:
-
+    QBluetoothDeviceDiscoveryAgent *discoveryAgent;
 
     Ui::MainWindow *ui;
 };

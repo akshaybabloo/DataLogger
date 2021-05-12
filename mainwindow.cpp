@@ -28,10 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
 
+    discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
 
 }
 
 MainWindow::~MainWindow() {
+    delete discoveryAgent;
     delete ui;
 }
 
