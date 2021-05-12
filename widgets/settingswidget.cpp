@@ -21,6 +21,8 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
     } else {
         ui->lightButton->setChecked(true);
     }
+
+    connect(ui->buttonBox, SIGNAL(accepted()), parent, SLOT(slotReboot()));
 }
 
 SettingsWidget::~SettingsWidget() {

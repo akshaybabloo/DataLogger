@@ -35,6 +35,8 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+int const MainWindow::EXIT_CODE_REBOOT = -123456789;
+
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
     auto macId = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText();
 
@@ -59,5 +61,10 @@ void MainWindow::on_actionAbout_DataLogger_triggered()
     about->setWindowFlag(Qt::Tool);
     about->setAttribute(Qt::WA_DeleteOnClose);
     about->show();
+}
+
+void MainWindow::slotReboot() {
+    qDebug() << "Performing application reboot...";
+    qApp->exit( MainWindow::EXIT_CODE_REBOOT );
 }
 

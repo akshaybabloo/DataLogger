@@ -38,39 +38,45 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 int main(int argc, char *argv[]) {
     qInstallMessageHandler(myMessageOutput);
 
+    int currentExitCode = 0;
+
     QCoreApplication::setOrganizationName("Gollahalli");
     QCoreApplication::setOrganizationDomain("gollahalli.com");
     QCoreApplication::setApplicationName("DataLogger");
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
-    QApplication a(argc, argv);
 
-    QSettings settings;
-    auto theme = settings.value("theme", "light").toString();
+    do {
+        QApplication a(argc, argv);
+        QSettings settings;
+        auto theme = settings.value("theme", "light").toString();
 
-    if (theme == "dark") {
-        QFile darkTheme(":style-dark.qss");
-        darkTheme.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&darkTheme);
-        a.setStyleSheet(ts.readAll());
-    } else if (theme == "light") {
-        QFile light(":style-light.qss");
-        light.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&light);
-        a.setStyleSheet(ts.readAll());
-    } else if (theme == "native") {
-        // do nothing
-    } else {
-        QFile light(":style-light.qss");
-        light.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&light);
-        a.setStyleSheet(ts.readAll());
-    }
+        if (theme == "dark") {
+            QFile darkTheme(":style-dark.qss");
+            darkTheme.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&darkTheme);
+            a.setStyleSheet(ts.readAll());
+        } else if (theme == "light") {
+            QFile light(":style-light.qss");
+            light.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&light);
+            a.setStyleSheet(ts.readAll());
+        } else if (theme == "native") {
+            // do nothing
+        } else {
+            QFile light(":style-light.qss");
+            light.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&light);
+            a.setStyleSheet(ts.readAll());
+        }
 
-    MainWindow w;
-    w.setWindowTitle(QString("DataLogger"));
-    w.setWindowIcon(QIcon(":/images/datalogger.png"));
-    w.show();
-    return QApplication::exec();
+        MainWindow w;
+        w.setWindowTitle(QString("DataLogger"));
+        w.setWindowIcon(QIcon(":/images/datalogger.png"));
+        w.show();
+        currentExitCode = QApplication::exec();
+    } while (currentExitCode == MainWindow::EXIT_CODE_REBOOT);
+
+    return currentExitCode;
 }
