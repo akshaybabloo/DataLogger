@@ -19,6 +19,7 @@ public:
     ~Logger();
 
 public slots:
+
     void slotReboot();
 
 private slots:
@@ -28,6 +29,7 @@ private slots:
     void on_serverButton_toggled(bool checked);
 
 signals:
+
     void emitServerStatusLabel(const QString &text);
 
 private:

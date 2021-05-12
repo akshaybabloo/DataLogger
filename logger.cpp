@@ -54,9 +54,8 @@ void Logger::on_actionSettings_triggered() {
     settingsWindow->show();
 }
 
-void Logger::on_serverButton_toggled(bool checked)
-{
-    if (checked){
+void Logger::on_serverButton_toggled(bool checked) {
+    if (checked) {
         ui->serverButton->setText("Stop Server");
         emit emitServerStatusLabel("server running on 127.0.0.1:1000");
     } else {
@@ -67,5 +66,5 @@ void Logger::on_serverButton_toggled(bool checked)
 
 void Logger::slotReboot() {
     qDebug() << "Performing application reboot...";
-    qApp->exit( MainWindow::EXIT_CODE_REBOOT );
+    qApp->exit(MainWindow::EXIT_CODE_REBOOT);
 }

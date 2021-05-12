@@ -17,11 +17,13 @@ Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+
     static int const EXIT_CODE_REBOOT;
 
     ~MainWindow() override;
 
 public slots:
+
     void slotReboot();
 
 private slots:
@@ -41,6 +43,8 @@ private slots:
     void on_actionAbout_DataLogger_triggered();
 
 private:
+
+
     Ui::MainWindow *ui;
 };
 

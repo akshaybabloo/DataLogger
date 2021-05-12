@@ -2,7 +2,6 @@
 #include <widgets/listwidget.h>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "devices.h"
 #include "logger.h"
 #include "widgets/settingswidget.h"
 #include<QDebug>
@@ -28,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
+
 
 }
 
@@ -55,8 +55,7 @@ void MainWindow::on_actionSettings_triggered() {
 }
 
 
-void MainWindow::on_actionAbout_DataLogger_triggered()
-{
+void MainWindow::on_actionAbout_DataLogger_triggered() {
     auto about = new AboutWidget(this);
     about->setWindowFlag(Qt::Tool);
     about->setAttribute(Qt::WA_DeleteOnClose);
@@ -65,6 +64,6 @@ void MainWindow::on_actionAbout_DataLogger_triggered()
 
 void MainWindow::slotReboot() {
     qDebug() << "Performing application reboot...";
-    qApp->exit( MainWindow::EXIT_CODE_REBOOT );
+    qApp->exit(MainWindow::EXIT_CODE_REBOOT);
 }
 
