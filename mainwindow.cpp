@@ -4,7 +4,6 @@
 #include "./ui_mainwindow.h"
 #include "logger.h"
 #include "widgets/settingswidget.h"
-#include<QDebug>
 #include <widgets/statusbarindicator.h>
 #include "widgets/aboutwidget.h"
 
@@ -42,11 +41,11 @@ int const MainWindow::EXIT_CODE_REBOOT = -123456789;
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
     auto macId = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText();
 
-    auto datalogger = new Logger();
+    auto datalogger = new Logger(this);
     datalogger->setWindowTitle(macId);
     datalogger->show();
 
-    this->close();
+    this->hide();
 }
 
 void MainWindow::on_actionSettings_triggered() {
