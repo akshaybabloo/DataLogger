@@ -2,6 +2,7 @@
 #include "ui_statusbarindicator.h"
 #include <QIcon>
 #include <QDebug>
+#include <QMovie>
 
 StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         QWidget(parent),
@@ -13,10 +14,17 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     xIcon.load(":/images/x-icon.svg");
     errorIcon.load(":/images/error-icon.svg");
 
-    ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
-    ui->serverStatus->setToolTip(tr("server not running"));
-
-    ui->serverStatusLabel->setText("");
+    if (parent->objectName() != "MainWindow") {
+        ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
+        ui->serverStatus->setToolTip(tr("server not running"));
+    } else {
+        // TODO: connect this to bluetooth search
+        auto *loadingIcon = new QMovie(":/images/loading-icon.gif");
+        loadingIcon->setScaledSize(QSize(15, 15));
+        ui->loadingIconLabel->setMovie(loadingIcon);
+        loadingIcon->start();
+        ui->loadingTextLabel->setText("searching...");
+    }
 
     auto *device = new QBluetoothLocalDevice(this);
     connect(device, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);

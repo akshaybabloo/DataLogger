@@ -15,17 +15,31 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="QLabel" name="loadingIconLabel">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="loadingTextLabel">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
    <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -42,21 +56,21 @@
    <item>
     <widget class="QLabel" name="serverStatusLabel">
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="serverStatus">
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="bluetoothStatus">
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
     </widget>
    </item>

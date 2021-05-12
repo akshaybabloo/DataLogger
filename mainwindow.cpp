@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "widgets/settingswidget.h"
 #include<QDebug>
+#include <widgets/statusbarindicator.h>
 #include "widgets/aboutwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -24,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item, widget);
     }
+
+    auto *indicator = new StatusBarIndicator(this);
+    ui->statusbar->addPermanentWidget(indicator, 1);
 
 }
 
