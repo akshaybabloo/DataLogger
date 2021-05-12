@@ -27,6 +27,7 @@ private:
     QPixmap checkIcon;
     QPixmap xIcon;
     QPixmap errorIcon;
+    QBluetoothLocalDevice *localDevice;
     Ui::StatusBarIndicator *ui;
 };
 

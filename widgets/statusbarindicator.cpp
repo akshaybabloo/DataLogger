@@ -6,7 +6,7 @@
 
 StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         QWidget(parent),
-        ui(new Ui::StatusBarIndicator) {
+        ui(new Ui::StatusBarIndicator), localDevice(new QBluetoothLocalDevice) {
     ui->setupUi(this);
 
     // load default icons
@@ -26,9 +26,8 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         ui->loadingTextLabel->setText("searching...");
     }
 
-    auto *device = new QBluetoothLocalDevice(this);
-    connect(device, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);
-    bluetoothStatus(device->hostMode());
+    connect(localDevice, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);
+    bluetoothStatus(localDevice->hostMode());
 }
 
 StatusBarIndicator::~StatusBarIndicator() {
@@ -48,7 +47,7 @@ void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
 }
 
 void StatusBarIndicator::bluetoothStatus(QBluetoothLocalDevice::HostMode state) {
-    qInfo() << state;
+    qDebug() << state;
     if (state == QBluetoothLocalDevice::HostPoweredOff) {
         ui->bluetoothStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->bluetoothStatus->setToolTip(tr("Bluetooth device not found"));
