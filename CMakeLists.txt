@@ -59,7 +59,6 @@ set(PROJECT_SOURCES
         widgets/statusbarindicator.cpp widgets/statusbarindicator.h widgets/statusbarindicator.ui
         widgets/aboutwidget.cpp widgets/aboutwidget.h widgets/aboutwidget.ui
 
-        devices.cpp devices.h
         utils.cpp utils.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
