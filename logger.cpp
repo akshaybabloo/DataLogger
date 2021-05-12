@@ -3,6 +3,7 @@
 #include <QLineSeries>
 #include "widgets/settingswidget.h"
 #include "widgets/statusbarindicator.h"
+#include "mainwindow.h"
 #include <QDebug>
 
 Logger::Logger(QWidget *parent) :
@@ -62,4 +63,9 @@ void Logger::on_serverButton_toggled(bool checked)
         ui->serverButton->setText("Start Server");
         emit emitServerStatusLabel("");
     }
+}
+
+void Logger::slotReboot() {
+    qDebug() << "Performing application reboot...";
+    qApp->exit( MainWindow::EXIT_CODE_REBOOT );
 }

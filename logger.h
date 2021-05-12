@@ -18,6 +18,9 @@ public:
 
     ~Logger();
 
+public slots:
+    void slotReboot();
+
 private slots:
 
     void on_actionSettings_triggered();
