@@ -4,7 +4,6 @@
 #include "./ui_mainwindow.h"
 #include "logger.h"
 #include "widgets/settingswidget.h"
-#include<QDebug>
 #include <widgets/statusbarindicator.h>
 #include "widgets/aboutwidget.h"
 
