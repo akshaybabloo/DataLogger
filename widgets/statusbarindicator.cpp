@@ -64,10 +64,12 @@ void StatusBarIndicator::bluetoothStatus(QBluetoothLocalDevice::HostMode state) 
 
 void StatusBarIndicator::scanStatus(bool finished) {
     if (finished) {
+        ui->refreshButton->show();
         ui->refreshButton->setEnabled(true);
         ui->loadingTextLabel->hide();
         ui->loadingIconLabel->hide();
     } else {
+        ui->refreshButton->hide();
         ui->refreshButton->setDisabled(true);
         ui->loadingTextLabel->show();
         ui->loadingIconLabel->show();
