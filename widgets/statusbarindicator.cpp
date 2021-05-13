@@ -18,6 +18,7 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     if (parent->objectName() != "MainWindow") {
         ui->serverStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->serverStatus->setToolTip(tr("server not running"));
+        ui->refreshButton->hide();
     } else {
         // TODO: connect this to bluetooth search
         auto *loadingIcon = new QMovie(":/images/loading-icon.gif");
