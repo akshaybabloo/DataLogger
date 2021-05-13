@@ -15,11 +15,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->addPermanentWidget(indicator, 1);
 
     discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
-    discoveryAgent->start();
 
     // whenever a device is discovered, this signal is triggered
     connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, &MainWindow::addDevice);
 
+    // activates when bluetooth scan is finished
+    connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished, this, &MainWindow::scanFinished);
+
+    // depending on the scan status the status indicators are hidden or shown
+    connect(this, &MainWindow::scanStatus, indicator, &StatusBarIndicator::scanStatus);
+
+    // start scanning
+    scan();
 }
 
 MainWindow::~MainWindow() {
@@ -93,5 +100,16 @@ bool MainWindow::isDeviceExists(const QString &label) {
     }
 
     return false;
+}
+
+void MainWindow::scan() {
+    emit scanStatus(false);
+    ui->listWidget->clear();
+    discoveryAgent->start();
+}
+
+void MainWindow::scanFinished() {
+    emit scanStatus(true);
+    qDebug() << "scan finished";
 }
 

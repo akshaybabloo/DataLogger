@@ -23,6 +23,8 @@ public slots:
 
     void bluetoothStatus(QBluetoothLocalDevice::HostMode state);
 
+    void scanStatus(bool finished);
+
 private:
     QPixmap checkIcon;
     QPixmap xIcon;

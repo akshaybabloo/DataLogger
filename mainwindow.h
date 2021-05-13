@@ -27,6 +27,10 @@ public:
 public slots:
 
     void slotReboot();
+    void scan();
+
+signals:
+    void scanStatus(bool finished);
 
 private slots:
 
@@ -61,6 +65,8 @@ private:
      * @return is present return `true` else `false`
      */
     bool isDeviceExists(const QString &label);
+
+    void scanFinished();
 
     Ui::MainWindow *ui;
     QBluetoothLocalDevice *localDevice;

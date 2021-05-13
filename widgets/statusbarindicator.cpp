@@ -1,5 +1,6 @@
 #include "statusbarindicator.h"
 #include "ui_statusbarindicator.h"
+#include "mainwindow.h"
 #include <QIcon>
 #include <QDebug>
 #include <QMovie>
@@ -27,6 +28,9 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
     }
 
     connect(localDevice, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);
+
+    // clicking on the refresh button triggers bluetooth scanning
+    connect(ui->refreshButton, SIGNAL(released()), parent, SLOT(scan()));
     bluetoothStatus(localDevice->hostMode());
 }
 
@@ -47,12 +51,23 @@ void StatusBarIndicator::receiveServerStatusLabel(const QString &text) {
 }
 
 void StatusBarIndicator::bluetoothStatus(QBluetoothLocalDevice::HostMode state) {
-    qDebug() << state;
     if (state == QBluetoothLocalDevice::HostPoweredOff) {
         ui->bluetoothStatus->setPixmap(xIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->bluetoothStatus->setToolTip(tr("Bluetooth device not found"));
     } else {
         ui->bluetoothStatus->setPixmap(checkIcon.scaledToHeight(10, Qt::SmoothTransformation));
         ui->bluetoothStatus->setToolTip(tr("Bluetooth enabled"));
+    }
+}
+
+void StatusBarIndicator::scanStatus(bool finished) {
+    if (finished) {
+        ui->refreshButton->setEnabled(true);
+        ui->loadingTextLabel->hide();
+        ui->loadingIconLabel->hide();
+    } else {
+        ui->refreshButton->setDisabled(true);
+        ui->loadingTextLabel->show();
+        ui->loadingIconLabel->show();
     }
 }
