@@ -16,6 +16,7 @@ public:
     ~ListWidget();
 
     void setText(const QString &text);
+    void setStatusText(const QString &text, bool isPaired=false);
 
     QString getText();
 

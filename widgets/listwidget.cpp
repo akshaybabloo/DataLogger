@@ -18,3 +18,12 @@ void ListWidget::setText(const QString &text) {
 QString ListWidget::getText() {
     return ui->deviceLabel->text();
 }
+
+void ListWidget::setStatusText(const QString &text, bool isPaired) {
+    ui->statusLabel->setText(text);
+    if (isPaired) {
+        ui->statusLabel->setStyleSheet("QLabel { color : green; }");
+    } else {
+        ui->statusLabel->setStyleSheet("QLabel { color : #F44336; }");
+    }
+}
