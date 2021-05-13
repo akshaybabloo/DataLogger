@@ -12,9 +12,9 @@ ListWidget::~ListWidget() {
 }
 
 void ListWidget::setText(const QString &text) {
-    ui->label->setText(text);
+    ui->deviceLabel->setText(text);
 }
 
 QString ListWidget::getText() {
-    return ui->label->text();
+    return ui->deviceLabel->text();
 }
