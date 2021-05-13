@@ -27,6 +27,23 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QToolButton" name="toolButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/images/refresh-icon.svg</normaloff>:/images/refresh-icon.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>10</width>
+       <height>10</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="loadingIconLabel">
      <property name="text">
       <string/>
@@ -76,6 +93,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -7,5 +7,6 @@
         <file alias="error-icon.svg">resources/images/error-icon.svg</file>
         <file alias="x-icon.svg">resources/images/x-icon.svg</file>
         <file alias="loading-icon.gif">resources/images/loading-icon.gif</file>
+        <file alias="refresh-icon.svg">resources/images/refresh-icon.svg</file>
     </qresource>
 </RCC>
