@@ -53,6 +53,14 @@ private:
      */
     void addDevice(const QBluetoothDeviceInfo &info);
 
+    /**
+     * Checks if a device already exists in the QListWidget
+     *
+     * @param label name of the device to check
+     * @return is present return `true` else `false`
+     */
+    bool isDeviceExists(const QString &label);
+
     Ui::MainWindow *ui;
 };
 

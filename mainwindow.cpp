@@ -61,9 +61,7 @@ void MainWindow::slotReboot() {
 
 void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
     QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
-    QList<QListWidgetItem *> items = ui->listWidget->findItems(label, Qt::MatchExactly | Qt::MatchRecursive);
-    // TODO: this will always return true because of the custom widget. Search by ListWidget and then filter it.
-    if (items.empty()) {
+    if (!isDeviceExists(label)) {
         auto item = new QListWidgetItem();
 
         auto widget = new ListWidget(this);
@@ -74,5 +72,17 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item, widget);
     }
+}
+
+bool MainWindow::isDeviceExists(const QString &label) {
+
+    for (int i = 0; i < ui->listWidget->count(); ++i) {
+        auto item = ui->listWidget->item(i);
+        if (dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText() == label){
+            return true;
+        }
+    }
+
+    return false;
 }
 
