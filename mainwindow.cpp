@@ -11,19 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    // Creates a list of custom widgets
-    for (int i = 0; i < 5; ++i) {
-        auto item = new QListWidgetItem();
-
-        auto widget = new ListWidget(this);
-        widget->setText(QString("text %1").arg(i));
-
-        item->setSizeHint(widget->sizeHint());
-
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, widget);
-    }
-
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
 
