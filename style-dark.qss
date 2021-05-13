@@ -891,7 +891,7 @@ QToolBar::separator:vertical {
 QToolButton {
   background: #31363b;
   border: 0px;
-  height: 40px;
+  /* height: 40px; */
   margin: 0px;
   padding: 5px;
   border-right: 10px solid #31363b;
