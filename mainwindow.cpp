@@ -8,7 +8,7 @@
 #include "widgets/aboutwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::MainWindow) {
+        : QMainWindow(parent), ui(new Ui::MainWindow), localDevice(new QBluetoothLocalDevice) {
     ui->setupUi(this);
 
     auto *indicator = new StatusBarIndicator(this);
@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete discoveryAgent;
+    delete localDevice;
     delete ui;
 }
 
@@ -67,6 +68,14 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
         auto widget = new ListWidget(this);
         widget->setText(label);
 
+        QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
+        if (pairingStatus == QBluetoothLocalDevice::Paired ||
+            pairingStatus == QBluetoothLocalDevice::AuthorizedPaired) {
+            widget->setStatusText("paired", true);
+        } else {
+            widget->setStatusText("not paired");
+        }
+
         item->setSizeHint(widget->sizeHint());
 
         ui->listWidget->addItem(item);
@@ -78,7 +87,7 @@ bool MainWindow::isDeviceExists(const QString &label) {
 
     for (int i = 0; i < ui->listWidget->count(); ++i) {
         auto item = ui->listWidget->item(i);
-        if (dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText() == label){
+        if (dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText() == label) {
             return true;
         }
     }

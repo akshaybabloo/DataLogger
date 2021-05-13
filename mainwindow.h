@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QBluetoothDeviceDiscoveryAgent>
+#include <QBluetoothLocalDevice>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -62,6 +63,7 @@ private:
     bool isDeviceExists(const QString &label);
 
     Ui::MainWindow *ui;
+    QBluetoothLocalDevice *localDevice;
 };
 
 #endif // MAINWINDOW_H
