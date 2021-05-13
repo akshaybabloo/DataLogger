@@ -26,12 +26,13 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         ui->loadingIconLabel->setMovie(loadingIcon);
         loadingIcon->start();
         ui->loadingTextLabel->setText("searching...");
+
+        // clicking on the refresh button triggers bluetooth scanning
+        connect(ui->refreshButton, SIGNAL(released()), parent, SLOT(scan()));
     }
 
     connect(localDevice, &QBluetoothLocalDevice::hostModeStateChanged, this, &StatusBarIndicator::bluetoothStatus);
 
-    // clicking on the refresh button triggers bluetooth scanning
-    connect(ui->refreshButton, SIGNAL(released()), parent, SLOT(scan()));
     bluetoothStatus(localDevice->hostMode());
 }
 
