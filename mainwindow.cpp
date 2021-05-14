@@ -2,6 +2,7 @@
 #include <widgets/listwidget.h>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "qglobal.h"
 #include "logger.h"
 #include "widgets/settingswidget.h"
 #include <widgets/statusbarindicator.h>
@@ -83,7 +84,13 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
             widget->setStatusText("not paired");
         }
 
-        item->setSizeHint(widget->sizeHint());
+        #ifdef Q_OS_MAC
+            item->setSizeHint(widget->sizeHint());
+        #endif
+
+        #ifdef Q_OS_WINDOWS
+            item->setSizeHint(QSize(305, 65));
+        #endif
 
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item, widget);

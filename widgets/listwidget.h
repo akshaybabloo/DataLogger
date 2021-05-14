@@ -2,6 +2,8 @@
 #define LISTWIDGET_H
 
 #include <QWidget>
+#include "qglobal.h"
+
 
 namespace Ui {
     class ListWidget;

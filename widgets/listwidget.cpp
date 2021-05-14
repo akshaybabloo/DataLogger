@@ -5,6 +5,10 @@ ListWidget::ListWidget(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::ListWidget) {
     ui->setupUi(this);
+
+#ifdef Q_OS_WINDOWS
+    ui->verticalLayout->addSpacing(6);
+#endif
 }
 
 ListWidget::~ListWidget() {
