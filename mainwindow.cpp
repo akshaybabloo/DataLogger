@@ -45,6 +45,8 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
     datalogger->setWindowTitle(macId);
     datalogger->show();
 
+    discoveryAgent->stop();
+
     this->close();
 }
 
