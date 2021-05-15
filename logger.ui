@@ -18,13 +18,46 @@
     <item>
      <layout class="QVBoxLayout" name="leftLayout">
       <item>
-       <widget class="QListWidget" name="listWidget">
+       <widget class="QGroupBox" name="groupBox">
         <property name="maximumSize">
          <size>
           <width>250</width>
           <height>16777215</height>
          </size>
         </property>
+        <property name="title">
+         <string>Channels</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget">
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
