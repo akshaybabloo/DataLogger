@@ -41,8 +41,7 @@ int const MainWindow::EXIT_CODE_REBOOT = -123456789;
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
     auto macId = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText();
 
-    auto datalogger = new Logger();
-    datalogger->setWindowTitle(macId);
+    auto datalogger = new Logger(nullptr, macId);
     datalogger->show();
 
     discoveryAgent->stop();

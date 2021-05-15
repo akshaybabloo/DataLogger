@@ -6,10 +6,13 @@
 #include "mainwindow.h"
 #include <QDebug>
 
-Logger::Logger(QWidget *parent) :
+Logger::Logger(QWidget *parent, const QString& macID) :
         QMainWindow(parent),
         ui(new Ui::Logger) {
     ui->setupUi(this);
+
+    setWindowTitle("Logger");
+    macID.split('(')[0].replace(" ", "");
 
     auto *series = new QLineSeries();
     series->append(0, 6);

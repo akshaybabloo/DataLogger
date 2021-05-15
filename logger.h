@@ -14,7 +14,7 @@ class Logger : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit Logger(QWidget *parent = nullptr);
+    explicit Logger(QWidget *parent = nullptr, const QString& macID = nullptr);
 
     ~Logger();
 
