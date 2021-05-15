@@ -9,6 +9,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->uiTab), tr("UI"));
+    ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->networkTab), tr("Network"));
 
     auto theme = settings.value("theme", "light").toString();
 
