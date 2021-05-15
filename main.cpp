@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QTextStream>
 #include <QDebug>
+#include <QSplashScreen>
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     QByteArray localMsg = msg.toLocal8Bit();
@@ -49,6 +50,12 @@ int main(int argc, char *argv[]) {
 
     do {
         QApplication a(argc, argv);
+
+        QPixmap pixmap(":/images/splash.png");
+        QSplashScreen splash(pixmap, Qt::WindowStaysOnTopHint);
+        splash.show();
+        splash.showMessage("Loaded modules", Qt::AlignLeft, Qt::white);
+
         QSettings settings;
         auto theme = settings.value("theme", "light").toString();
 
@@ -73,10 +80,15 @@ int main(int argc, char *argv[]) {
             a.setStyleSheet(ts.readAll());
         }
 
+        QApplication::processEvents();
+
         MainWindow w;
         w.setWindowTitle(QString("DataLogger"));
         w.setWindowIcon(QIcon(":/images/datalogger.png"));
         w.show();
+
+        splash.finish(&w);
+
         currentExitCode = QApplication::exec();
     } while (currentExitCode == MainWindow::EXIT_CODE_REBOOT);
 
