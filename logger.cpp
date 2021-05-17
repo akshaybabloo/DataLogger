@@ -12,7 +12,7 @@ Logger::Logger(QWidget *parent, const QString& macID) :
     ui->setupUi(this);
 
     setWindowTitle("Logger");
-    macID.split('(')[0].replace(" ", "");
+
 
     auto *series = new QLineSeries();
     series->append(0, 6);
