@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow), localDevice(new QBluetoothLocalDevice) {
     ui->setupUi(this);
 
-#ifdef Q_OS_Windows
+#ifdef Q_OS_WINDOWS
     ui->centralwidget->setContentsMargins(QMargins(0,6,0,0));
 #endif
 
