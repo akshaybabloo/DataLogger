@@ -30,6 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
     // depending on the scan status the status indicators are hidden or shown
     connect(this, &MainWindow::scanStatus, indicator, &StatusBarIndicator::scanStatus);
 
+    // adds custom context menu
+    ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->listWidget, &QListWidget::customContextMenuRequested, this, &MainWindow::pairingMenu);
+
     // start scanning
     scan();
 }
@@ -123,5 +127,27 @@ void MainWindow::scan() {
 void MainWindow::scanFinished() {
     emit scanStatus(true);
     qDebug() << "scan finished";
+}
+
+void MainWindow::pairingMenu(const QPoint &pos) {
+    if (ui->listWidget->count() == 0) {
+        return;
+    }
+
+    QMenu menu(this);
+    QAction *pairAction = menu.addAction("Pair");
+    QAction *removePairAction = menu.addAction("Remove pair");
+    QAction *chosenAction = menu.exec(ui->listWidget->viewport()->mapToGlobal(pos));
+    QListWidgetItem *currentItem = ui->listWidget->currentItem();
+    auto widgetText = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(currentItem))->getText();
+    auto macId = widgetText.split('(')[0].trimmed();
+
+    QBluetoothAddress address(macId);
+    if (chosenAction == pairAction) {
+        localDevice->requestPairing(address, QBluetoothLocalDevice::Paired);
+    } else if (chosenAction == removePairAction) {
+        localDevice->requestPairing(address, QBluetoothLocalDevice::Unpaired);
+    }
+
 }
 

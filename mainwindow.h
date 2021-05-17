@@ -71,6 +71,13 @@ private:
      */
     void scanFinished();
 
+    /**
+     * Opens a pairing menu with options for pairing and removing a bluetooth device.
+     *
+     * @param pos position of right click
+     */
+    void pairingMenu(const QPoint &pos);
+
     Ui::MainWindow *ui;
     QBluetoothLocalDevice *localDevice;
 };
