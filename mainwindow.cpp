@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 #ifdef Q_OS_WINDOWS
-    ui->centralwidget->setContentsMargins(QMargins(0,6,0,0));
+    ui->centralwidget->setContentsMargins(QMargins(0, 6, 0, 0));
 #endif
 
     auto *indicator = new StatusBarIndicator(this);
@@ -89,13 +89,13 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
             widget->setStatusText("not paired");
         }
 
-        #ifdef Q_OS_MAC
-            item->setSizeHint(widget->sizeHint());
-        #endif
+#ifdef Q_OS_MAC
+        item->setSizeHint(widget->sizeHint());
+#endif
 
-        #ifdef Q_OS_WINDOWS
-            item->setSizeHint(QSize(305, 65));
-        #endif
+#ifdef Q_OS_WINDOWS
+        item->setSizeHint(QSize(305, 65));
+#endif
 
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item, widget);
