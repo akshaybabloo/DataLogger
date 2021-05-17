@@ -66,6 +66,9 @@ private:
      */
     bool isDeviceExists(const QString &label);
 
+    /**
+     * Triggers when the scanning for Bluetooth is finished
+     */
     void scanFinished();
 
     Ui::MainWindow *ui;
