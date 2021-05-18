@@ -9,7 +9,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->uiTab), tr("UI"));
-    ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->networkTab), tr("Network"));
+    ui->tabWidget->setTabText(ui->tabWidget->indexOf(ui->networkTab), tr("Connectivity"));
 
     auto theme = settings.value("theme", "light").toString();
 
@@ -21,6 +21,12 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
         ui->nativeButton->setChecked(true);
     } else {
         ui->lightButton->setChecked(true);
+    }
+
+    if (settings.value("connectivity/enableBLE", true).toBool()) {
+        ui->bluetoothBleCheckBox->setCheckState(Qt::Checked);
+    } else {
+        ui->bluetoothBleCheckBox->setCheckState(Qt::Unchecked);
     }
 
     connect(ui->buttonBox, SIGNAL(accepted()), parent, SLOT(slotReboot()));
@@ -46,6 +52,8 @@ void SettingsWidget::on_buttonBox_accepted() {
     } else {
         settings.setValue("theme", "light");
     }
+
+    settings.setValue("connectivity/enableBLE", true);
 
     this->close();
 }
