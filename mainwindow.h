@@ -9,6 +9,7 @@
 #include <QListWidgetItem>
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QBluetoothLocalDevice>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,7 +51,12 @@ private slots:
 
 private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;
+    Ui::MainWindow *ui;
+    QBluetoothLocalDevice *localDevice;
+    QSettings settings;
+    bool filterBle;
 
+private:
     /**
      * This method is triggered when a new device is found, then the device will be added to the list.
      *
@@ -77,9 +83,6 @@ private:
      * @param pos position of right click
      */
     void pairingMenu(const QPoint &pos);
-
-    Ui::MainWindow *ui;
-    QBluetoothLocalDevice *localDevice;
 };
 
 #endif // MAINWINDOW_H

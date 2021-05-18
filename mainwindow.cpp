@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 #ifdef Q_OS_WINDOWS
     ui->centralwidget->setContentsMargins(QMargins(0, 6, 0, 0));
 #endif
+    
+    filterBle = settings.value("connectivity/enableBle", true).toBool();
 
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
@@ -80,7 +82,7 @@ void MainWindow::slotReboot() {
 
 void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
     QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
-    if (!isDeviceExists(label)) {
+    if (filterBle && !isDeviceExists(label) && info.coreConfigurations() && QBluetoothDeviceInfo::LowEnergyCoreConfiguration) {
         auto item = new QListWidgetItem();
 
         auto widget = new ListWidget(this);
@@ -122,7 +124,12 @@ bool MainWindow::isDeviceExists(const QString &label) {
 void MainWindow::scan() {
     emit scanStatus(false);
     ui->listWidget->clear();
-    discoveryAgent->start();
+
+    if (filterBle) {
+        discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+    } else {
+        discoveryAgent->start();
+    }
 }
 
 void MainWindow::scanFinished() {
