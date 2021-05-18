@@ -13,6 +13,7 @@ Logger::Logger(QWidget *parent, const QString& macID) :
 
     setWindowTitle("Logger");
 
+    QBluetoothAddress address(macID);
 
     auto *series = new QLineSeries();
     series->append(0, 6);
