@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
 
-    discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
+    discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
+    discoveryAgent->setLowEnergyDiscoveryTimeout(5000);
 
     // whenever a device is discovered, this signal is triggered
     connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, &MainWindow::addDevice);
