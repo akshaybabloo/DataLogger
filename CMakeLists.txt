@@ -59,7 +59,8 @@ set(PROJECT_SOURCES
         widgets/statusbarindicator.cpp widgets/statusbarindicator.h widgets/statusbarindicator.ui
         widgets/aboutwidget.cpp widgets/aboutwidget.h widgets/aboutwidget.ui
 
-        utils.cpp utils.h)
+        utils.cpp utils.h
+        deviceinfo.cpp deviceinfo.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DataLogger
