@@ -2,6 +2,7 @@
 #define LISTWIDGET_H
 
 #include <QWidget>
+#include <QBluetoothDeviceInfo>
 #include "qglobal.h"
 
 
@@ -19,11 +20,13 @@ public:
 
     void setText(const QString &text);
     void setStatusText(const QString &text, bool isPaired=false);
-
+    void setDevice(const QBluetoothDeviceInfo &info);
+    QBluetoothDeviceInfo getDevice();
     QString getText();
 
 private:
     Ui::ListWidget *ui;
+    QBluetoothDeviceInfo bluetoothInfo;
 };
 
 #endif // LISTWIDGET_H

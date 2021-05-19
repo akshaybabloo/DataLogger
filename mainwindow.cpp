@@ -87,6 +87,7 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
 
         auto widget = new ListWidget(this);
         widget->setText(label);
+        widget->setDevice(info);
 
         QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
         if (pairingStatus == QBluetoothLocalDevice::Paired ||

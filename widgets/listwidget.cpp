@@ -1,5 +1,7 @@
 #include "listwidget.h"
 #include "ui_listwidget.h"
+#include "deviceinfo.h"
+#include <QDebug>
 
 ListWidget::ListWidget(QWidget *parent) :
         QWidget(parent),
@@ -30,4 +32,12 @@ void ListWidget::setStatusText(const QString &text, bool isPaired) {
     } else {
         ui->statusLabel->setStyleSheet("QLabel { color : #F44336; }");
     }
+}
+
+void ListWidget::setDevice(const QBluetoothDeviceInfo &info) {
+    bluetoothInfo = info;
+}
+
+QBluetoothDeviceInfo ListWidget::getDevice() {
+    return bluetoothInfo;
 }
