@@ -7,7 +7,7 @@
 #include <QDebug>
 #include "deviceinfo.h"
 #include <qlowenergycontroller.h>
-
+#include <widgets/aboutwidget.h>
 
 Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
         QMainWindow(parent),
@@ -126,3 +126,18 @@ void Logger::setRandomAddress(bool newValue) {
     randomAddress = newValue;
     emit randomAddressChanged();
 }
+
+void Logger::on_actionExit_triggered()
+{
+    controller->disconnectFromDevice();
+    QCoreApplication::quit();
+}
+
+void Logger::on_actionAbout_DataBlogger_triggered()
+{
+    auto about = new AboutWidget(this);
+    about->setWindowFlag(Qt::Tool);
+    about->setAttribute(Qt::WA_DeleteOnClose);
+    about->show();
+}
+

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtCharts>
 #include <qlowenergycontroller.h>
+#include <widgets/statusbarindicator.h>
 #include "deviceinfo.h"
 
 using namespace QtCharts;
@@ -41,10 +42,14 @@ private slots:
     void serviceScanDone();
     void error(QLowEnergyController::Error newError);
 
+    void on_actionExit_triggered();
+
+    void on_actionAbout_DataBlogger_triggered();
+
 private:
     QSettings settings;
     QLowEnergyController *controller = nullptr;
-
+    StatusBarIndicator *indicator;
 
     Ui::Logger *ui;
 
