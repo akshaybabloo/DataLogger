@@ -160,3 +160,9 @@ void MainWindow::pairingMenu(const QPoint &pos) {
 
 }
 
+
+void MainWindow::on_actionExit_triggered()
+{
+    exit(0);
+}
+

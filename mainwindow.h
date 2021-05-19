@@ -49,6 +49,8 @@ private slots:
 
     void on_actionAbout_DataLogger_triggered();
 
+    void on_actionExit_triggered();
+
 private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;
     Ui::MainWindow *ui;
