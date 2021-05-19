@@ -6,6 +6,8 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include "deviceinfo.h"
+#include <qlowenergycontroller.h>
+
 
 Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
         QMainWindow(parent),
@@ -15,6 +17,19 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     setWindowTitle("Logger");
 
     qInfo() << deviceInfo->address();
+    controller = QLowEnergyController::createCentral(*deviceInfo);
+    connect(controller, &QLowEnergyController::connected, this, &Logger::deviceConnected);
+    connect(controller, &QLowEnergyController::disconnected, this, &Logger::deviceDisconnected);
+    connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Logger::error);
+    connect(controller, &QLowEnergyController::serviceDiscovered, this, &Logger::addLowEnergyService);
+    connect(controller, &QLowEnergyController::discoveryFinished, this, &Logger::serviceScanDone);
+
+    if (isRandomAddress()) {
+        controller->setRemoteAddressType(QLowEnergyController::RandomAddress);
+    } else {
+        controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
+    }
+    controller->connectToDevice();
 
     auto *series = new QLineSeries();
     series->append(0, 6);
@@ -49,6 +64,7 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 }
 
 Logger::~Logger() {
+    delete controller;
     delete ui;
 }
 
@@ -72,4 +88,40 @@ void Logger::on_serverButton_toggled(bool checked) {
 void Logger::slotReboot() {
     qDebug() << "Performing application reboot...";
     qApp->exit(MainWindow::EXIT_CODE_REBOOT);
+}
+
+void Logger::deviceConnected() {
+    qInfo() << "device connected";
+    controller->discoverServices();
+}
+
+void Logger::deviceDisconnected() {
+    qInfo() << "device disconnected";
+}
+
+void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
+    qInfo() << "service discovered";
+    QLowEnergyService *service = controller->createServiceObject(serviceUUID);
+    if (!service) {
+        qWarning() << "Cannot create service for uuid";
+        return;
+    }
+    // TODO: get the service information
+}
+
+void Logger::serviceScanDone() {
+    qInfo() << "service scan done";
+}
+
+void Logger::error(QLowEnergyController::Error) {
+    qWarning() << "Error: " << controller->errorString();
+}
+
+bool Logger::isRandomAddress() {
+    return randomAddress;
+}
+
+void Logger::setRandomAddress(bool newValue) {
+    randomAddress = newValue;
+    emit randomAddressChanged();
 }
