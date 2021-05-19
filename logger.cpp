@@ -58,13 +58,14 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 
     ui->rightLayout->addWidget(chartView);
 
-    auto *indicator = new StatusBarIndicator(this);
+    indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
     connect(this, &Logger::emitServerStatusLabel, indicator, &StatusBarIndicator::receiveServerStatusLabel);
 }
 
 Logger::~Logger() {
     delete controller;
+    delete indicator;
     delete ui;
 }
 
