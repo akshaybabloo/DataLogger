@@ -50,9 +50,9 @@ MainWindow::~MainWindow() {
 int const MainWindow::EXIT_CODE_REBOOT = -123456789;
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
-    auto macId = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getText();
+    auto device = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getDevice();
 
-    auto datalogger = new Logger(nullptr, macId.split('(')[0].trimmed());
+    auto datalogger = new Logger(nullptr, &device);
     datalogger->show();
 
     discoveryAgent->stop();

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtCharts>
+#include "deviceinfo.h"
 
 using namespace QtCharts;
 
@@ -14,7 +15,7 @@ class Logger : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit Logger(QWidget *parent = nullptr, const QString& macID = nullptr);
+    explicit Logger(QWidget *parent = nullptr, QBluetoothDeviceInfo *deviceInfo = nullptr);
 
     ~Logger();
 

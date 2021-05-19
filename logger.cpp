@@ -5,15 +5,16 @@
 #include "widgets/statusbarindicator.h"
 #include "mainwindow.h"
 #include <QDebug>
+#include "deviceinfo.h"
 
-Logger::Logger(QWidget *parent, const QString& macID) :
+Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
         QMainWindow(parent),
         ui(new Ui::Logger) {
     ui->setupUi(this);
 
     setWindowTitle("Logger");
 
-    QBluetoothAddress address(macID);
+    qInfo() << deviceInfo->address();
 
     auto *series = new QLineSeries();
     series->append(0, 6);
