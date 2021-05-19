@@ -50,6 +50,10 @@ MainWindow::~MainWindow() {
 int const MainWindow::EXIT_CODE_REBOOT = -123456789;
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item) {
+
+    ui->centralwidget->setDisabled(true);
+    emit scanStatus(true, "Loading...");
+
     auto device = dynamic_cast<ListWidget *>(ui->listWidget->itemWidget(item))->getDevice();
 
     auto datalogger = new Logger(nullptr, &device);

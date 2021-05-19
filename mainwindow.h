@@ -31,7 +31,7 @@ public slots:
     void scan();
 
 signals:
-    void scanStatus(bool finished);
+    void scanStatus(bool finished, const QString& statusText = nullptr);
 
 private slots:
 

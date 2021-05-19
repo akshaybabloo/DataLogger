@@ -62,16 +62,24 @@ void StatusBarIndicator::bluetoothStatus(QBluetoothLocalDevice::HostMode state) 
     }
 }
 
-void StatusBarIndicator::scanStatus(bool finished) {
+void StatusBarIndicator::scanStatus(bool finished, const QString& statusText) {
     if (finished) {
         ui->refreshButton->show();
         ui->refreshButton->setEnabled(true);
         ui->loadingTextLabel->hide();
         ui->loadingIconLabel->hide();
+        if (statusText != nullptr) {
+            ui->loadingTextLabel->setText(statusText);
+            ui->loadingTextLabel->show();
+        }
     } else {
         ui->refreshButton->hide();
         ui->refreshButton->setDisabled(true);
         ui->loadingTextLabel->show();
         ui->loadingIconLabel->show();
+        if (statusText != nullptr) {
+            ui->loadingTextLabel->setText(statusText);
+            ui->loadingTextLabel->show();
+        }
     }
 }
