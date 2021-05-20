@@ -131,14 +131,12 @@ void Logger::setRandomAddress(bool newValue) {
     emit randomAddressChanged();
 }
 
-void Logger::on_actionExit_triggered()
-{
+void Logger::on_actionExit_triggered() {
     controller->disconnectFromDevice();
     QCoreApplication::quit();
 }
 
-void Logger::on_actionAbout_DataBlogger_triggered()
-{
+void Logger::on_actionAbout_DataBlogger_triggered() {
     auto about = new AboutWidget(this);
     about->setWindowFlag(Qt::Tool);
     about->setAttribute(Qt::WA_DeleteOnClose);
