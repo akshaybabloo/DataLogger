@@ -64,6 +64,8 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 }
 
 Logger::~Logger() {
+    qDeleteAll(services);
+    services.clear();
     delete controller;
     delete indicator;
     delete ui;
@@ -107,6 +109,8 @@ void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
         qWarning() << "Cannot create service for uuid";
         return;
     }
+    qInfo() << serviceUUID;
+    services.append(service);
     // TODO: get the service information
 }
 

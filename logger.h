@@ -47,14 +47,18 @@ private slots:
     void on_actionAbout_DataBlogger_triggered();
 
 private:
+    bool isRandomAddress();
+    void setRandomAddress(bool newValue);
+
+
+private:
     QSettings settings;
     QLowEnergyController *controller = nullptr;
     StatusBarIndicator *indicator;
+    QList<QObject *> services;
 
     Ui::Logger *ui;
 
-    bool isRandomAddress();
-    void setRandomAddress(bool newValue);
     bool randomAddress = false;
 };
 
