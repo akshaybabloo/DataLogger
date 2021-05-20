@@ -4,6 +4,7 @@
 
 #include "deviceinfo.h"
 #include <qbluetoothaddress.h>
+#include <qbluetoothuuid.h>
 
 DeviceInfo::DeviceInfo(const QBluetoothDeviceInfo &deviceInfo) {
     device = deviceInfo;
@@ -11,7 +12,7 @@ DeviceInfo::DeviceInfo(const QBluetoothDeviceInfo &deviceInfo) {
 
 QString DeviceInfo::getAddress() const {
 #ifdef Q_OS_MAC
-    device.deviceUuid().toString();
+    return device.deviceUuid().toString();
 #else
     return device.address().toString();
 #endif
