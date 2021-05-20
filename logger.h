@@ -22,14 +22,7 @@ public:
     ~Logger();
 
 public slots:
-
     void slotReboot();
-
-private slots:
-
-    void on_actionSettings_triggered();
-
-    void on_serverButton_toggled(bool checked);
 
 signals:
     void emitServerStatusLabel(const QString &text);
@@ -42,14 +35,15 @@ private slots:
     void serviceScanDone();
     void error(QLowEnergyController::Error newError);
 
+    // TODO: change these to connect()
     void on_actionExit_triggered();
-
     void on_actionAbout_DataBlogger_triggered();
+    void on_actionSettings_triggered();
+    void on_serverButton_toggled(bool checked);
 
 private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
-
 
 private:
     QSettings settings;
