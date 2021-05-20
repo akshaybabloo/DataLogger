@@ -60,7 +60,8 @@ set(PROJECT_SOURCES
         widgets/aboutwidget.cpp widgets/aboutwidget.h widgets/aboutwidget.ui
 
         utils.cpp utils.h
-        deviceinfo.cpp deviceinfo.h)
+        deviceinfo.cpp deviceinfo.h
+        serviceinfo.cpp serviceinfo.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DataLogger
