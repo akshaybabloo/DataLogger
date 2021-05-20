@@ -110,7 +110,7 @@ void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
         return;
     }
     qInfo() << serviceUUID;
-    services.append(service);
+    services.append(new ServiceInfo(service));
     // TODO: get the service information
 }
 
