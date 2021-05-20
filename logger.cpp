@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include "deviceinfo.h"
+#include "serviceinfo.h"
 #include <qlowenergycontroller.h>
 #include <widgets/aboutwidget.h>
 
@@ -116,6 +117,8 @@ void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
 
 void Logger::serviceScanDone() {
     qInfo() << "service scan done";
+
+    connectToService(ChannelDataServiceUUID);
 }
 
 void Logger::error(QLowEnergyController::Error) {
@@ -141,5 +144,35 @@ void Logger::on_actionAbout_DataBlogger_triggered() {
     about->setWindowFlag(Qt::Tool);
     about->setAttribute(Qt::WA_DeleteOnClose);
     about->show();
+}
+
+void Logger::connectToService(const QString &serviceUUID) {
+    qDebug() << "connect called";
+    qDebug() << serviceUUID.toLower();
+
+    QLowEnergyService *service = nullptr;
+    for (auto s : qAsConst(services)) {
+        auto serviceInfo = qobject_cast<ServiceInfo *>(s);
+        if (!serviceInfo) {
+            continue;
+        }
+        qDebug() << serviceInfo->getUuid();
+        if (serviceInfo->getUuid() == serviceUUID.toLower()) {
+            service = serviceInfo->service();
+        }
+    }
+
+    if (!service) {
+        return;
+    }
+    qInfo() << service->state();
+    if (service->state() == QLowEnergyService::DiscoveryRequired) {
+        //connect(service, &QLowEnergyService::stateChanged, this, &Logger::serviceDetailsDiscovered);
+        service->discoverDetails();
+    }
+
+    // TODO: this will return empty. Check.
+    auto address = new QBluetoothUuid(ChannelsSubscribeUUID);
+    qInfo() << service->characteristic(*address).value();
 }
 

@@ -6,6 +6,7 @@
 #include <qlowenergycontroller.h>
 #include <widgets/statusbarindicator.h>
 #include "deviceinfo.h"
+#include "serviceinfo.h"
 
 using namespace QtCharts;
 
@@ -44,6 +45,7 @@ private slots:
 private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
+    void connectToService(const QString &serviceUUID);
 
 private:
     QSettings settings;
