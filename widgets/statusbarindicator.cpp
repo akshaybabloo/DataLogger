@@ -20,12 +20,12 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         ui->serverStatus->setToolTip(tr("server not running"));
         ui->refreshButton->hide();
     } else {
-        // TODO: connect this to bluetooth search
         auto *loadingIcon = new QMovie(":/images/loading-icon.gif");
         loadingIcon->setScaledSize(QSize(15, 15));
         ui->loadingIconLabel->setMovie(loadingIcon);
         loadingIcon->start();
         ui->loadingTextLabel->setText("searching...");
+        ui->batteryBar->hide();
 
         // clicking on the refresh button triggers bluetooth scanning
         connect(ui->refreshButton, SIGNAL(released()), parent, SLOT(scan()));

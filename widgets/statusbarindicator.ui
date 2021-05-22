@@ -71,6 +71,19 @@
     </spacer>
    </item>
    <item>
+    <widget class="QProgressBar" name="batteryBar">
+     <property name="toolTip">
+      <string>Battery status</string>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="serverStatusLabel">
      <property name="text">
       <string/>
