@@ -32,6 +32,11 @@ signals:
 private slots:
     void deviceConnected();
     void deviceDisconnected();
+
+    /**
+     * Adds BLE services in this case its @see ChannelDataServiceUUID and @see DeviceControlServiceUUID
+     * @param serviceUUID is the UUID of the service
+     */
     void addLowEnergyService(const QBluetoothUuid &serviceUUID);
     void serviceScanDone();
     void error(QLowEnergyController::Error newError);
@@ -46,12 +51,15 @@ private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
     void connectToService(const QString &serviceUUID);
+    void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
 
 private:
     QSettings settings;
     QLowEnergyController *controller = nullptr;
     StatusBarIndicator *indicator;
     QList<QObject *> services;
+    QLowEnergyService *channelSubscribe = nullptr;
+    QLowEnergyService *channels = nullptr;
 
     Ui::Logger *ui;
 

@@ -148,7 +148,6 @@ void Logger::on_actionAbout_DataBlogger_triggered() {
 
 void Logger::connectToService(const QString &serviceUUID) {
     qDebug() << "connect called";
-    qDebug() << serviceUUID.toLower();
 
     QLowEnergyService *service = nullptr;
     for (auto s : qAsConst(services)) {
@@ -156,9 +155,9 @@ void Logger::connectToService(const QString &serviceUUID) {
         if (!serviceInfo) {
             continue;
         }
-        qDebug() << serviceInfo->getUuid();
         if (serviceInfo->getUuid() == serviceUUID.toLower()) {
             service = serviceInfo->service();
+            break;
         }
     }
 
@@ -167,12 +166,48 @@ void Logger::connectToService(const QString &serviceUUID) {
     }
     qInfo() << service->state();
     if (service->state() == QLowEnergyService::DiscoveryRequired) {
-        //connect(service, &QLowEnergyService::stateChanged, this, &Logger::serviceDetailsDiscovered);
+        connect(service, &QLowEnergyService::stateChanged, this, &Logger::serviceDetailsDiscovered);
         service->discoverDetails();
+        return;
     }
 
     // TODO: this will return empty. Check.
-    auto address = new QBluetoothUuid(ChannelsSubscribeUUID);
-    qInfo() << service->characteristic(*address).value();
+//    auto address = new QBluetoothUuid(ChannelsSubscribeUUID);
+//    qInfo() << service->characteristic(*address).value();
+
+    // this will list out services
+    for (const auto &item : service->characteristics()){
+        qDebug() << item.uuid();
+        qDebug() << item.value();
+    }
 }
+
+void Logger::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
+{
+    if (newState != QLowEnergyService::ServiceDiscovered) {
+        // do not hang in "Scanning for characteristics" mode forever
+        // in case the service discovery failed
+        // We have to queue the signal up to give UI time to even enter
+        // the above mode
+        if (newState != QLowEnergyService::DiscoveringServices) {
+//            QMetaObject::invokeMethod(this, "characteristicsUpdated",
+//                                      Qt::QueuedConnection);
+        }
+        return;
+    }
+
+    auto service = qobject_cast<QLowEnergyService *>(sender());
+    if (!service)
+        return;
+
+    // this will prints out sub-services.
+    const QList<QLowEnergyCharacteristic> chars = service->characteristics();
+    for (const QLowEnergyCharacteristic &ch : chars) {
+        qDebug() << ch.uuid();
+        qDebug() << ch.value();
+    }
+
+    //emit characteristicsUpdated();
+}
+
 
