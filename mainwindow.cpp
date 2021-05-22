@@ -85,7 +85,11 @@ void MainWindow::slotReboot() {
 }
 
 void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
+#ifdef Q_OS_MAC
+    QString label = QString("%1 (%2)").arg(info.deviceUuid().toString(), info.name());
+#else
     QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
+#endif
     if (filterBle && !isDeviceExists(label) && info.coreConfigurations() && QBluetoothDeviceInfo::LowEnergyCoreConfiguration) {
         auto item = new QListWidgetItem();
 
