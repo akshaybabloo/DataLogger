@@ -126,6 +126,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="filterAUTBLECheckBox">
+            <property name="text">
+             <string>Filter AUTBLE Devices</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

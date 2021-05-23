@@ -29,6 +29,12 @@ SettingsWidget::SettingsWidget(QWidget *parent) :
         ui->bluetoothBleCheckBox->setCheckState(Qt::Unchecked);
     }
 
+    if (settings.value("connectivity/filterAUTBLE", true).toBool()) {
+        ui->filterAUTBLECheckBox->setCheckState(Qt::Checked);
+    } else {
+        ui->filterAUTBLECheckBox->setCheckState(Qt::Unchecked);
+    }
+
     connect(ui->buttonBox, SIGNAL(accepted()), parent, SLOT(slotReboot()));
 }
 
@@ -54,6 +60,7 @@ void SettingsWidget::on_buttonBox_accepted() {
     }
 
     settings.setValue("connectivity/enableBLE", true);
+    settings.setValue("connectivity/filterAUTBLE", true);
 
     this->close();
 }
