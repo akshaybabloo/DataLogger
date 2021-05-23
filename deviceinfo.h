@@ -9,7 +9,7 @@
 #include <QObject>
 #include <qbluetoothdeviceinfo.h>
 
-class DeviceInfo: public QObject {
+class DeviceInfo : public QObject {
 
 public:
     DeviceInfo() = default;

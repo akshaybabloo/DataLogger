@@ -19,7 +19,7 @@ public:
     ~ListWidget();
 
     void setText(const QString &text);
-    void setStatusText(const QString &text, bool isPaired=false);
+    void setStatusText(const QString &text, bool isPaired = false);
     void setDevice(const QBluetoothDeviceInfo &info);
     QBluetoothDeviceInfo getDevice();
     QString getText();

@@ -62,7 +62,7 @@ void StatusBarIndicator::bluetoothStatus(QBluetoothLocalDevice::HostMode state) 
     }
 }
 
-void StatusBarIndicator::scanStatus(bool finished, const QString& statusText) {
+void StatusBarIndicator::scanStatus(bool finished, const QString &statusText) {
     if (finished) {
         ui->refreshButton->show();
         ui->refreshButton->setEnabled(true);
