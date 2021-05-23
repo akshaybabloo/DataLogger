@@ -230,8 +230,8 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     QString intValue = "";
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length() - 1; ++i) {
-        auto value = hexValueArray[i].toInt(nullptr, 16);
-        auto vValue = (value * 5) / 65536.0;
+        auto nValue = hexValueArray[i].toInt(nullptr, 16);
+        auto vValue = (nValue * 5) / 65536.0;
         intValue = intValue + QString::number(vValue) + " ";
     }
     intValue = intValue.trimmed();
