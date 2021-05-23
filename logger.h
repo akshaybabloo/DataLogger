@@ -47,19 +47,23 @@ private slots:
     void on_actionSettings_triggered();
     void on_serverButton_toggled(bool checked);
 
+    void serviceStateChanged(QLowEnergyService::ServiceState newState);
+    void updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value);
+    void confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value);
+
 private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
     void connectToService(const QString &serviceUUID);
-    void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
 
 private:
     QSettings settings;
     QLowEnergyController *controller = nullptr;
     StatusBarIndicator *indicator;
     QList<QObject *> services;
-    QLowEnergyService *channelSubscribe = nullptr;
-    QLowEnergyService *channels = nullptr;
+    QLowEnergyService *channelSubscribeService = nullptr;
+    QLowEnergyDescriptor channelSubscribeDesc;
+    QLowEnergyService *channelsService = nullptr;
 
     Ui::Logger *ui;
 

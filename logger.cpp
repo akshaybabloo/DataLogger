@@ -16,8 +16,11 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     ui->setupUi(this);
 
     setWindowTitle("Logger");
-
+#ifdef Q_OS_MAC
+    qInfo() << deviceInfo->deviceUuid();
+#else
     qInfo() << deviceInfo->address();
+#endif
     controller = QLowEnergyController::createCentral(*deviceInfo);
     connect(controller, &QLowEnergyController::connected, this, &Logger::deviceConnected);
     connect(controller, &QLowEnergyController::disconnected, this, &Logger::deviceDisconnected);
@@ -67,6 +70,7 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 Logger::~Logger() {
     qDeleteAll(services);
     services.clear();
+    controller->disconnectFromDevice();
     delete controller;
     delete indicator;
     delete ui;
@@ -164,50 +168,84 @@ void Logger::connectToService(const QString &serviceUUID) {
     if (!service) {
         return;
     }
-    qInfo() << service->state();
-    if (service->state() == QLowEnergyService::DiscoveryRequired) {
-        connect(service, &QLowEnergyService::stateChanged, this, &Logger::serviceDetailsDiscovered);
-        service->discoverDetails();
+
+    qInfo() << serviceUUID;
+    channelSubscribeService = controller->createServiceObject(QBluetoothUuid(serviceUUID), this);
+    if (channelSubscribeService) {
+        qInfo() << "service object created";
+        connect(channelSubscribeService, &QLowEnergyService::stateChanged, this, &Logger::serviceStateChanged);
+        connect(channelSubscribeService, &QLowEnergyService::characteristicChanged, this, &Logger::updateWaveValue);
+        connect(channelSubscribeService, &QLowEnergyService::characteristicRead, this, &Logger::updateWaveValue);
+        connect(channelSubscribeService, &QLowEnergyService::descriptorWritten, this,
+                &Logger::confirmedDescriptorWrite);
+        channelSubscribeService->discoverDetails();
         return;
     }
 
-    // TODO: this will return empty. Check.
-//    auto address = new QBluetoothUuid(ChannelsSubscribeUUID);
-//    qInfo() << service->characteristic(*address).value();
-
     // this will list out services
-    for (const auto &item : service->characteristics()){
+    for (const auto &item : service->characteristics()) {
         qDebug() << item.uuid();
         qDebug() << item.value();
     }
 }
 
-void Logger::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
-{
-    if (newState != QLowEnergyService::ServiceDiscovered) {
-        // do not hang in "Scanning for characteristics" mode forever
-        // in case the service discovery failed
-        // We have to queue the signal up to give UI time to even enter
-        // the above mode
-        if (newState != QLowEnergyService::DiscoveringServices) {
-//            QMetaObject::invokeMethod(this, "characteristicsUpdated",
-//                                      Qt::QueuedConnection);
+void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
+    qInfo() << newState;
+    switch (newState) {
+        case QLowEnergyService::DiscoveringServices:
+            qInfo() << tr("Discovering services...");
+            break;
+        case QLowEnergyService::ServiceDiscovered: {
+            qInfo() << tr("Service discovered.");
+
+            const QLowEnergyCharacteristic energyCharacteristic = channelSubscribeService->characteristic(
+                    QBluetoothUuid(ChannelsSubscribeUUID));
+            if (!energyCharacteristic.isValid()) {
+                qInfo() << tr("Data not found.");
+                break;
+            }
+
+            channelSubscribeDesc = energyCharacteristic.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            if (channelSubscribeDesc.isValid())
+                channelSubscribeService->writeDescriptor(channelSubscribeDesc, QByteArray::fromHex("0100"));
+
+            break;
         }
-        return;
+        default:
+            //nothing for now
+            break;
     }
+}
 
-    auto service = qobject_cast<QLowEnergyService *>(sender());
-    if (!service)
-        return;
-
-    // this will prints out sub-services.
-    const QList<QLowEnergyCharacteristic> chars = service->characteristics();
-    for (const QLowEnergyCharacteristic &ch : chars) {
-        qDebug() << ch.uuid();
-        qDebug() << ch.value();
+void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value) {
+    qInfo() << value;
+    qInfo() << QString::fromUtf8(value);
+    QString hexValue = "";
+    for (int i = 4; i < value.length(); i += 2) {
+        hexValue = hexValue + value[i] + value[i + 1] + " ";
+//        qInfo() << hexValue;
     }
+    hexValue = hexValue.trimmed();
 
-    //emit characteristicsUpdated();
+    QString intValue = "";
+    auto hexValueArray = hexValue.split(" ");
+    for (int i = 0; i < hexValueArray.length() - 1; ++i) {
+        auto value = hexValueArray[i].toInt(nullptr, 16);
+        auto vValue = (value * 5) / 65536.0;
+        intValue = intValue + QString::number(vValue) + " ";
+    }
+    intValue = intValue.trimmed();
+
+    qInfo() << intValue;
+}
+
+void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
+    if (info.isValid() && info == channelSubscribeDesc && value == QByteArray::fromHex("0000")) {
+        //disabled notifications -> assume disconnect intent
+        controller->disconnectFromDevice();
+        delete channelSubscribeService;
+        channelSubscribeService = nullptr;
+    }
 }
 
 
