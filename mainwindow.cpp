@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 #ifdef Q_OS_WINDOWS
     ui->centralwidget->setContentsMargins(QMargins(0, 6, 0, 0));
 #endif
-    
+
     filterBle = settings.value("connectivity/enableBle", true).toBool();
     filterAUTBLE = settings.value("connectivity/enableBle", true).toBool();
 
@@ -92,7 +92,8 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
     QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
 #endif
     // TODO: add filter AUT BLE
-    if (filterBle && !isDeviceExists(label) && info.coreConfigurations() && QBluetoothDeviceInfo::LowEnergyCoreConfiguration) {
+    if (filterBle && !isDeviceExists(label) && info.coreConfigurations() &&
+        QBluetoothDeviceInfo::LowEnergyCoreConfiguration) {
         auto item = new QListWidgetItem();
 
         auto widget = new ListWidget(this);
@@ -168,8 +169,7 @@ void MainWindow::pairingMenu(const QPoint &pos) {
 
 }
 
-void MainWindow::on_actionExit_triggered()
-{
+void MainWindow::on_actionExit_triggered() {
     QCoreApplication::quit();
 }
 

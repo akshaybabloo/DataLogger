@@ -9,9 +9,9 @@
 #include <QObject>
 #include <QLowEnergyService>
 
-class ServiceInfo: public QObject{
+class ServiceInfo : public QObject {
 
-    Q_OBJECT
+Q_OBJECT
 
 public:
     ServiceInfo() = default;
