@@ -57,6 +57,7 @@ private:
     QBluetoothLocalDevice *localDevice;
     QSettings settings;
     bool filterBle;
+    bool filterAUTBLE;
 
 private:
     /**

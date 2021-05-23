@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
     
     filterBle = settings.value("connectivity/enableBle", true).toBool();
+    filterAUTBLE = settings.value("connectivity/enableBle", true).toBool();
 
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
@@ -90,6 +91,7 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
 #else
     QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
 #endif
+    // TODO: add filter AUT BLE
     if (filterBle && !isDeviceExists(label) && info.coreConfigurations() && QBluetoothDeviceInfo::LowEnergyCoreConfiguration) {
         auto item = new QListWidgetItem();
 
@@ -107,9 +109,7 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
 
 #ifdef Q_OS_MAC
         item->setSizeHint(widget->sizeHint());
-#endif
-
-#ifdef Q_OS_WINDOWS
+#elif Q_OS_WINDOWS
         item->setSizeHint(QSize(305, 65));
 #endif
 
