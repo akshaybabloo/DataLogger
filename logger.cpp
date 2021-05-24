@@ -218,20 +218,18 @@ void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
 }
 
 void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value) {
-    qInfo() << value;
-    qInfo() << QString::fromUtf8(value);
     QString hexValue = "";
     for (int i = 4; i < value.length(); i += 2) {
-        hexValue = hexValue + value[i] + value[i + 1] + " ";
-//        qInfo() << hexValue;
+        // using abs because value[i] produces negative value (according to c# code)
+        hexValue = hexValue + QString("%1").arg(QString::number(abs(value[i]), 16)) + QString("%1").arg(abs(value[i+1]), 2, 16, QLatin1Char('0')) + " ";
     }
     hexValue = hexValue.trimmed();
 
     QString intValue = "";
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length() - 1; ++i) {
-        auto nValue = hexValueArray[i].toInt(nullptr, 16);
-        auto vValue = (nValue * 5) / 65536.0;
+        auto nValue = -hexValueArray[i].toInt(nullptr, 16); // negating value because this gives me positive value (according to c# code)
+        auto vValue = static_cast<double>(((nValue * 5) / 65536.0));
         intValue = intValue + QString::number(vValue) + " ";
     }
     intValue = intValue.trimmed();
