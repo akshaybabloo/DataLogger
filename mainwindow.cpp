@@ -110,8 +110,8 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
 
 #ifdef Q_OS_MAC
         item->setSizeHint(widget->sizeHint());
-#elif Q_OS_WINDOWS
-        item->setSizeHint(QSize(305, 65));
+#else
+        item->setSizeHint(widget->sizeHint());
 #endif
 
         ui->listWidget->addItem(item);
