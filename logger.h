@@ -51,6 +51,8 @@ private slots:
     void updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value);
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value);
 
+    void on_saveToFileButton_clicked();
+
 private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
@@ -64,6 +66,7 @@ private:
     QLowEnergyService *channelSubscribeService = nullptr;
     QLowEnergyDescriptor channelSubscribeDesc;
     QLowEnergyService *channelsService = nullptr;
+    QChart *chart = nullptr;
 
     Ui::Logger *ui;
 
