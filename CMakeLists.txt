@@ -11,11 +11,13 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# CLion setting. This will not work in Windows.
 if ($ENV{CLION_IDE})
     set(QT_VERSION_MAJOR 5)
     # Note: This path needs to be update on every new Qt version
     if (WIN32)
-        set(CMAKE_PREFIX_PATH C:/Qt/5.15.2/msvc2019_64)
+        # For some reason its not working on Windows. Use Qt Creator to make it runnable.
+        set(CMAKE_PREFIX_PATH "C:/Qt/5.15.2/msvc2019_64")
     elseif (APPLE)
         set(CMAKE_PREFIX_PATH /Users/akshayrajgollahalli/Qt/5.15.2/clang_64)
     endif ()
