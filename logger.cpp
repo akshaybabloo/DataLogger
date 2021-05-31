@@ -36,6 +36,15 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     controller->connectToDevice();
 
     qChart = new QChart();
+    axisX = new QValueAxis;
+    axisY = new QValueAxis;
+    qChart->addAxis(axisX, Qt::AlignBottom);
+    qChart->addAxis(axisY, Qt::AlignLeft);
+
+    axisX->setRange(0,10.0);
+    axisX->setTickCount(10);
+    axisY->setRange(-2.5,2.5);
+
     chart = new Chart(qChart);
 
     auto *chartView = new QChartView(qChart);
@@ -221,23 +230,28 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
         values.append(vValue);
     }
 
-//    qInfo() << values;
+    qInfo() << values;
     if (lineSeries.length() == 0) {
+        qChart->legend()->hide();
+        QPen red(Qt::yellow);
+        red.setWidth(3);
         for (int i = 0; i < values.length(); ++i) {
             auto *series = new QLineSeries;
-            lineSeries.append(series);
             series->setUseOpenGL(true);
+            series->setPen(red);
+            lineSeries.append(series);
 
-            qChart->legend()->hide();
-            qChart->setAnimationOptions(QChart::AllAnimations);
             qChart->addSeries(series);
-            qChart->createDefaultAxes();
+
+            series->attachAxis(axisX);
+            series->attachAxis(axisY);
         }
     }
 
-    chart->startUpdating(lineSeries, values);
-    qreal x = qChart->plotArea().width() / 5;
-    qChart->scroll(x, 0);
+    qreal x = qChart->plotArea().width() / axisX->tickCount();
+    chart->startUpdating(lineSeries, values, x);
+//    qInfo() << qChart->plotArea().width();
+//    qChart->scroll(x, 0);
 }
 
 void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
@@ -250,19 +264,6 @@ void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QB
 }
 
 void Logger::on_saveToFileButton_clicked() {
-    auto *series = new QLineSeries();
-    series->append(0, 6);
-    series->append(2, 4);
-    series->append(3, 8);
-    series->append(7, 4);
-    series->append(10, 5);
-    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 
-    series->setUseOpenGL(true);
-
-    qChart->legend()->hide();
-    qChart->setAnimationOptions(QChart::AllAnimations);
-    qChart->addSeries(series);
-    qChart->createDefaultAxes();
 }
 

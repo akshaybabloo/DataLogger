@@ -70,6 +70,8 @@ private:
     QChart *qChart = nullptr;
     Chart *chart = nullptr;
     QList<QLineSeries *> lineSeries;
+    QValueAxis *axisX = nullptr;
+    QValueAxis *axisY = nullptr;
 
     Ui::Logger *ui;
 
