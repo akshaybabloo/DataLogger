@@ -63,7 +63,7 @@ set(PROJECT_SOURCES
 
         utils.cpp utils.h
         deviceinfo.cpp deviceinfo.h
-        serviceinfo.cpp serviceinfo.h)
+        serviceinfo.cpp serviceinfo.h chart.cpp chart.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DataLogger
