@@ -13,16 +13,18 @@ QT_CHARTS_USE_NAMESPACE
 
 class Chart : public QObject {
 
-    Q_OBJECT
+Q_OBJECT
 public:
     explicit Chart(QObject *parent = 0);
-    void startUpdating(const QList<QLineSeries *> &seriesList, const QList<qreal>& values);
+    void startUpdating(const QList<QLineSeries *> &seriesList, const QList<qreal> &values, qreal windowWidth);
 
 //private slots:
 //    void update(const QLineSeries *seriesList);
 
 private:
     QList<QLineSeries *> c_seriesList;
+    QVector<QPointF> m_data;
+
 
 };
 
