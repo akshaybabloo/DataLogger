@@ -35,21 +35,8 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     }
     controller->connectToDevice();
 
-    auto *series = new QLineSeries();
-    series->append(0, 6);
-    series->append(2, 4);
-    series->append(3, 8);
-    series->append(7, 4);
-    series->append(10, 5);
-    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
-
-    series->setUseOpenGL(true);
-
     qChart = new QChart();
-    qChart->legend()->hide();
-    qChart->setAnimationOptions(QChart::AllAnimations);
-    qChart->addSeries(series);
-    qChart->createDefaultAxes();
+    chart = new Chart(qChart);
 
     auto *chartView = new QChartView(qChart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -220,19 +207,37 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     QString hexValue = "";
     for (int i = 4; i < value.length(); i += 2) {
         // using abs because value[i] produces negative value (according to c# code)
-        hexValue = hexValue + QString("%1").arg(QString::number(abs(value[i]), 16)) + QString("%1").arg(abs(value[i+1]), 2, 16, QLatin1Char('0')) + " ";
+        hexValue = hexValue + QString("%1").arg(QString::number(abs(value[i]), 16)) +
+                   QString("%1").arg(abs(value[i + 1]), 2, 16, QLatin1Char('0')) + " ";
     }
     hexValue = hexValue.trimmed();
 
     QList<qreal> values;
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length(); ++i) {
-        auto nValue = -hexValueArray[i].toInt(nullptr, 16); // negating value because this gives me positive value (according to c# code)
+        auto nValue = -hexValueArray[i].toInt(nullptr,
+                                              16); // negating value because this gives me positive value (according to c# code)
         auto vValue = static_cast<qreal>(((nValue * 5) / 65536.0));
         values.append(vValue);
     }
 
-    qInfo() << values;
+//    qInfo() << values;
+    if (lineSeries.length() == 0) {
+        for (int i = 0; i < values.length(); ++i) {
+            auto *series = new QLineSeries;
+            lineSeries.append(series);
+            series->setUseOpenGL(true);
+
+            qChart->legend()->hide();
+            qChart->setAnimationOptions(QChart::AllAnimations);
+            qChart->addSeries(series);
+            qChart->createDefaultAxes();
+        }
+    }
+
+    chart->startUpdating(lineSeries, values);
+    qreal x = qChart->plotArea().width() / 5;
+    qChart->scroll(x, 0);
 }
 
 void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
@@ -244,8 +249,7 @@ void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QB
     }
 }
 
-void Logger::on_saveToFileButton_clicked()
-{
+void Logger::on_saveToFileButton_clicked() {
     auto *series = new QLineSeries();
     series->append(0, 6);
     series->append(2, 4);
@@ -255,6 +259,10 @@ void Logger::on_saveToFileButton_clicked()
     *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 
     series->setUseOpenGL(true);
+
+    qChart->legend()->hide();
+    qChart->setAnimationOptions(QChart::AllAnimations);
     qChart->addSeries(series);
+    qChart->createDefaultAxes();
 }
 

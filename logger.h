@@ -7,6 +7,7 @@
 #include <widgets/statusbarindicator.h>
 #include "deviceinfo.h"
 #include "serviceinfo.h"
+#include "chart.h"
 
 using namespace QtCharts;
 
@@ -67,6 +68,8 @@ private:
     QLowEnergyDescriptor channelSubscribeDesc;
     QLowEnergyService *channelsService = nullptr;
     QChart *qChart = nullptr;
+    Chart *chart = nullptr;
+    QList<QLineSeries *> lineSeries;
 
     Ui::Logger *ui;
 
