@@ -9,6 +9,7 @@
 #include "serviceinfo.h"
 #include <qlowenergycontroller.h>
 #include <widgets/aboutwidget.h>
+#include <widgets/channelwidget.h>
 
 Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
         QMainWindow(parent),
@@ -245,6 +246,15 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
 
             series->attachAxis(axisX);
             series->attachAxis(axisY);
+
+            // set channel widgets to channel list
+            auto item = new QListWidgetItem();
+            auto widget = new ChannelWidget(this);
+            widget->setText(QString("Channel %1").arg(i+1));
+            widget->setChecked(true);
+            item->setSizeHint(widget->sizeHint());
+            ui->channelListWidget->addItem(item);
+            ui->channelListWidget->setItemWidget(item, widget);
         }
     }
 
