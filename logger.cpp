@@ -225,16 +225,15 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     }
     hexValue = hexValue.trimmed();
 
-    QString intValue = "";
+    QList<qreal> values;
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length(); ++i) {
         auto nValue = -hexValueArray[i].toInt(nullptr, 16); // negating value because this gives me positive value (according to c# code)
-        auto vValue = static_cast<double>(((nValue * 5) / 65536.0));
-        intValue = intValue + QString::number(vValue) + " ";
+        auto vValue = static_cast<qreal>(((nValue * 5) / 65536.0));
+        values.append(vValue);
     }
-    intValue = intValue.trimmed();
 
-    qInfo() << intValue;
+    qInfo() << values;
 }
 
 void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
