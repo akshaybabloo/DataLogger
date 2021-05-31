@@ -45,13 +45,13 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 
     series->setUseOpenGL(true);
 
-    chart = new QChart();
-    chart->legend()->hide();
-    chart->setAnimationOptions(QChart::AllAnimations);
-    chart->addSeries(series);
-    chart->createDefaultAxes();
+    qChart = new QChart();
+    qChart->legend()->hide();
+    qChart->setAnimationOptions(QChart::AllAnimations);
+    qChart->addSeries(series);
+    qChart->createDefaultAxes();
 
-    auto *chartView = new QChartView(chart);
+    auto *chartView = new QChartView(qChart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     auto theme = settings.value("theme", "light").toString();
@@ -70,7 +70,7 @@ Logger::~Logger() {
     qDeleteAll(services);
     services.clear();
     controller->disconnectFromDevice();
-    delete chart;
+    delete qChart;
     delete controller;
     delete indicator;
     delete ui;
@@ -255,6 +255,6 @@ void Logger::on_saveToFileButton_clicked()
     *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 
     series->setUseOpenGL(true);
-    chart->addSeries(series);
+    qChart->addSeries(series);
 }
 

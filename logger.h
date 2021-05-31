@@ -66,7 +66,7 @@ private:
     QLowEnergyService *channelSubscribeService = nullptr;
     QLowEnergyDescriptor channelSubscribeDesc;
     QLowEnergyService *channelsService = nullptr;
-    QChart *chart = nullptr;
+    QChart *qChart = nullptr;
 
     Ui::Logger *ui;
 
