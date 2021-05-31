@@ -59,8 +59,8 @@ void SettingsWidget::on_buttonBox_accepted() {
         settings.setValue("theme", "light");
     }
 
-    settings.setValue("connectivity/enableBLE", true);
-    settings.setValue("connectivity/filterAUTBLE", true);
+    settings.setValue("connectivity/enableBLE", ui->bluetoothBleCheckBox->isChecked());
+    settings.setValue("connectivity/filterAUTBLE", ui->filterAUTBLECheckBox->isChecked());
 
     this->close();
 }
