@@ -175,7 +175,6 @@ void Logger::connectToService(const QString &serviceUUID) {
         qInfo() << "service object created";
         connect(channelSubscribeService, &QLowEnergyService::stateChanged, this, &Logger::serviceStateChanged);
         connect(channelSubscribeService, &QLowEnergyService::characteristicChanged, this, &Logger::updateWaveValue);
-//        connect(channelSubscribeService, &QLowEnergyService::characteristicRead, this, &Logger::updateWaveValue);
         connect(channelSubscribeService, &QLowEnergyService::descriptorWritten, this,
                 &Logger::confirmedDescriptorWrite);
         channelSubscribeService->discoverDetails();
