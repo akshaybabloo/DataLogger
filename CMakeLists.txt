@@ -60,6 +60,7 @@ set(PROJECT_SOURCES
         widgets/settingswidget.cpp widgets/settingswidget.h widgets/settingswidget.ui
         widgets/statusbarindicator.cpp widgets/statusbarindicator.h widgets/statusbarindicator.ui
         widgets/aboutwidget.cpp widgets/aboutwidget.h widgets/aboutwidget.ui
+        widgets/channelwidget.h widgets/channelwidget.cpp widgets/channelwidget.ui
 
         utils.cpp utils.h
         deviceinfo.cpp deviceinfo.h
