@@ -10,6 +10,11 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         ui(new Ui::StatusBarIndicator), localDevice(new QBluetoothLocalDevice) {
     ui->setupUi(this);
 
+    QSettings settings;
+
+    auto isDarkMode = settings.value("ui/theme", true).toBool();
+    qInfo() << isDarkMode;
+
     // load default icons
     checkIcon.load(":/images/check-icon.svg");
     xIcon.load(":/images/x-icon.svg");
@@ -24,8 +29,18 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         loadingIcon->setScaledSize(QSize(15, 15));
         ui->loadingIconLabel->setMovie(loadingIcon);
         loadingIcon->start();
+
         ui->loadingTextLabel->setText("searching...");
         ui->batteryBar->hide();
+
+        if (isDarkMode) {
+            refreshIcon.addFile(":/images/refresh-white.svg");
+        } else {
+            refreshIcon.addFile(":/images/refresh-black.svg");
+        }
+        ui->refreshButton->setIcon(refreshIcon);
+        ui->refreshButton->setIconSize(QSize(12, 12));
+
 
         // clicking on the refresh button triggers bluetooth scanning
         connect(ui->refreshButton, SIGNAL(released()), parent, SLOT(scan()));

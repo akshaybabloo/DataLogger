@@ -8,6 +8,8 @@
         <file alias="x-icon.svg">resources/images/x-icon.svg</file>
         <file alias="loading-icon.gif">resources/images/loading-icon.gif</file>
         <file alias="refresh-icon.svg">resources/images/refresh-icon.svg</file>
+        <file alias="refresh-white.svg">resources/images/dark/refresh-white.svg</file>
+        <file alias="refresh-black.svg">resources/images/light/refresh-black.svg</file>
         <file alias="splash.png">resources/images/splash.png</file>
     </qresource>
 </RCC>

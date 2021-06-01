@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QBluetoothLocalDevice>
+#include <QIcon>
 
 namespace Ui {
     class StatusBarIndicator;
@@ -29,6 +30,7 @@ private:
     QPixmap checkIcon;
     QPixmap xIcon;
     QPixmap errorIcon;
+    QIcon refreshIcon;
     QBluetoothLocalDevice *localDevice;
     Ui::StatusBarIndicator *ui;
 };
