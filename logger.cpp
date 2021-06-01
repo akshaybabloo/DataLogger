@@ -22,6 +22,10 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 #else
     qInfo() << deviceInfo->address();
 #endif
+    timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, &QTimer::timeout, this, &Logger::countFrequency);
+
     controller = QLowEnergyController::createCentral(*deviceInfo);
     connect(controller, &QLowEnergyController::connected, this, &Logger::deviceConnected);
     connect(controller, &QLowEnergyController::disconnected, this, &Logger::deviceDisconnected);
@@ -203,11 +207,17 @@ void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
             }
 
             channelSubscribeDesc = energyCharacteristic.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-            if (channelSubscribeDesc.isValid())
+            if (channelSubscribeDesc.isValid()) {
+                //qInfo() << tr("Service discovered.");
                 channelSubscribeService->writeDescriptor(channelSubscribeDesc, QByteArray::fromHex("0100"));
+                timer->start(1000);
+            }
 
             break;
         }
+//        case QLowEnergyService::DiscoveryRequired: {
+//            channelSubscribeService->discoverDetails();
+//        }
         default:
             //nothing for now
             break;
@@ -215,6 +225,11 @@ void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
 }
 
 void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value) {
+
+    if (!frequencyCheckDone) {
+        frequencyCounter++;
+    }
+
     QString hexValue = "";
     for (int i = 4; i < value.length(); i += 2) {
         // using abs because value[i] produces negative value (according to c# code)
@@ -276,5 +291,10 @@ void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QB
 
 void Logger::on_saveToFileButton_clicked() {
 
+}
+
+void Logger::countFrequency() {
+    frequencyCheckDone = true;
+    qInfo() << "frequency is " << frequencyCounter;
 }
 

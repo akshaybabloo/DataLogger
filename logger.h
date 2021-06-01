@@ -54,6 +54,8 @@ private slots:
 
     void on_saveToFileButton_clicked();
 
+    void countFrequency();
+
 private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
@@ -72,6 +74,11 @@ private:
     QList<QLineSeries *> lineSeries;
     QValueAxis *axisX = nullptr;
     QValueAxis *axisY = nullptr;
+
+    // get the stream frequency
+    QTimer *timer = nullptr;
+    quint32 frequencyCounter = 0;
+    bool frequencyCheckDone = false;
 
     Ui::Logger *ui;
 
