@@ -87,6 +87,14 @@ private:
      * @return is present return `true` else `false`
      */
     bool isDeviceExists(const QString &label);
+
+    /**
+     * Extends @see MainWindow::addDevice
+     *
+     * @param info
+     * @param label
+     */
+    void addBleDevicesToList(const QBluetoothDeviceInfo &info, const QString &label);
 };
 
 #endif // MAINWINDOW_H

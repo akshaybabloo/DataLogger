@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
     filterBle = settings.value("connectivity/enableBle", true).toBool();
-    filterAUTBLE = settings.value("connectivity/enableBle", true).toBool();
+    filterAUTBLE = settings.value("connectivity/filterAUTBLE", true).toBool();
 
     auto *indicator = new StatusBarIndicator(this);
     ui->statusbar->addPermanentWidget(indicator, 1);
@@ -91,32 +91,42 @@ void MainWindow::addDevice(const QBluetoothDeviceInfo &info) {
 #else
     QString label = QString("%1 (%2)").arg(info.address().toString(), info.name());
 #endif
-    // TODO: add filter AUT BLE
+    // TODO: there could be a better way to write this
     if (filterBle && !isDeviceExists(label) && info.coreConfigurations() &&
         QBluetoothDeviceInfo::LowEnergyCoreConfiguration) {
-        auto item = new QListWidgetItem();
-
-        auto widget = new ListWidget(this);
-        widget->setText(label);
-        widget->setDevice(info);
-
-        QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
-        if (pairingStatus == QBluetoothLocalDevice::Paired ||
-            pairingStatus == QBluetoothLocalDevice::AuthorizedPaired) {
-            widget->setStatusText("paired", true);
+        if (filterAUTBLE) {
+            if (label.contains("aut", Qt::CaseInsensitive)) {
+                addBleDevicesToList(info, label);
+            }
         } else {
-            widget->setStatusText("not paired");
+            addBleDevicesToList(info, label);
         }
+    }
+}
+
+void MainWindow::addBleDevicesToList(const QBluetoothDeviceInfo &info, const QString &label) {
+    auto item = new QListWidgetItem();
+
+    auto widget = new ListWidget(this);
+    widget->setText(label);
+    widget->setDevice(info);
+
+    QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
+    if (pairingStatus == QBluetoothLocalDevice::Paired ||
+        pairingStatus == QBluetoothLocalDevice::AuthorizedPaired) {
+        widget->setStatusText("paired", true);
+    } else {
+        widget->setStatusText("not paired");
+    }
 
 #ifdef Q_OS_MAC
-        item->setSizeHint(widget->sizeHint());
+    item->setSizeHint(widget->sizeHint());
 #else
-        item->setSizeHint(widget->sizeHint());
+    item->setSizeHint(widget->sizeHint());
 #endif
 
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, widget);
-    }
+    ui->listWidget->addItem(item);
+    ui->listWidget->setItemWidget(item, widget);
 }
 
 bool MainWindow::isDeviceExists(const QString &label) {
