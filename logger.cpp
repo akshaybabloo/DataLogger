@@ -298,3 +298,17 @@ void Logger::countFrequency() {
     qInfo() << "frequency is " << frequencyCounter;
 }
 
+void Logger::closeEvent(QCloseEvent *event) {
+    if (channelSubscribeDesc.isValid() && channelSubscribeService && channelSubscribeDesc.value() == QByteArray::fromHex("0100")){
+        qInfo() << "Unsubscribing channel services";
+        channelSubscribeService->writeDescriptor(channelSubscribeDesc, QByteArray::fromHex("0000"));
+    } else {
+        if (controller) {
+            qInfo() << "Disconnecting from device";
+            controller->disconnectFromDevice();
+        }
+        delete channelSubscribeService;
+        channelSubscribeService = nullptr;
+    }
+}
+

@@ -60,6 +60,7 @@ private:
     bool isRandomAddress();
     void setRandomAddress(bool newValue);
     void connectToService(const QString &serviceUUID);
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     QSettings settings;
