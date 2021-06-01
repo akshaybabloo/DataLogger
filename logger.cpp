@@ -42,9 +42,9 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     qChart->addAxis(axisX, Qt::AlignBottom);
     qChart->addAxis(axisY, Qt::AlignLeft);
 
-    axisX->setRange(0,10.0);
+    axisX->setRange(0, 10.0);
     axisX->setTickCount(10);
-    axisY->setRange(-2.5,2.5);
+    axisY->setRange(-2.5, 2.5);
 
     chart = new Chart(qChart);
 
@@ -250,7 +250,7 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
             // set channel widgets to channel list
             auto item = new QListWidgetItem();
             auto widget = new ChannelWidget(this);
-            widget->setText(QString("Channel %1").arg(i+1));
+            widget->setText(QString("Channel %1").arg(i + 1));
             widget->setChecked(true);
             item->setSizeHint(widget->sizeHint());
             ui->channelListWidget->addItem(item);
