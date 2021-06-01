@@ -51,29 +51,12 @@ private slots:
 
     void on_actionExit_triggered();
 
-private:
-    QBluetoothDeviceDiscoveryAgent *discoveryAgent;
-    Ui::MainWindow *ui;
-    QBluetoothLocalDevice *localDevice;
-    QSettings settings;
-    bool filterBle;
-    bool filterAUTBLE;
-
-private:
     /**
      * This method is triggered when a new device is found, then the device will be added to the list.
      *
      * @param info device information
      */
     void addDevice(const QBluetoothDeviceInfo &info);
-
-    /**
-     * Checks if a device already exists in the QListWidget
-     *
-     * @param label name of the device to check
-     * @return is present return `true` else `false`
-     */
-    bool isDeviceExists(const QString &label);
 
     /**
      * Triggers when the scanning for Bluetooth is finished
@@ -86,6 +69,24 @@ private:
      * @param pos position of right click
      */
     void pairingMenu(const QPoint &pos);
+
+private:
+    QBluetoothDeviceDiscoveryAgent *discoveryAgent;
+    Ui::MainWindow *ui;
+    QBluetoothLocalDevice *localDevice;
+    QSettings settings;
+    bool filterBle;
+    bool filterAUTBLE;
+
+private:
+
+    /**
+     * Checks if a device already exists in the QListWidget
+     *
+     * @param label name of the device to check
+     * @return is present return `true` else `false`
+     */
+    bool isDeviceExists(const QString &label);
 };
 
 #endif // MAINWINDOW_H
