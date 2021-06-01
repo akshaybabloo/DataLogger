@@ -12,8 +12,7 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
 
     QSettings settings;
 
-    auto isDarkMode = settings.value("ui/theme", true).toBool();
-    qInfo() << isDarkMode;
+    auto themeType = settings.value("theme", "light").toString();
 
     // load default icons
     checkIcon.load(":/images/check-icon.svg");
@@ -33,7 +32,7 @@ StatusBarIndicator::StatusBarIndicator(QWidget *parent) :
         ui->loadingTextLabel->setText("searching...");
         ui->batteryBar->hide();
 
-        if (isDarkMode) {
+        if (themeType == "dark") {
             refreshIcon.addFile(":/images/refresh-white.svg");
         } else {
             refreshIcon.addFile(":/images/refresh-black.svg");
