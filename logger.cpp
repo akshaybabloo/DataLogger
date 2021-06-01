@@ -69,6 +69,7 @@ Logger::~Logger() {
     controller->disconnectFromDevice();
     delete qChart;
     delete controller;
+    delete channelSubscribeService;
     delete indicator;
     delete ui;
 }
