@@ -68,7 +68,6 @@ private:
     QList<QObject *> services;
     QLowEnergyService *channelSubscribeService = nullptr;
     QLowEnergyDescriptor channelSubscribeDesc;
-    QLowEnergyService *channelsService = nullptr;
     QChart *qChart = nullptr;
     Chart *chart = nullptr;
     QList<QLineSeries *> lineSeries;
