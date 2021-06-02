@@ -41,6 +41,7 @@ private slots:
     void addLowEnergyService(const QBluetoothUuid &serviceUUID);
     void serviceScanDone();
     void error(QLowEnergyController::Error newError);
+    void errorService(QLowEnergyService::ServiceError);
 
     // TODO: change these to connect()
     void on_actionExit_triggered();

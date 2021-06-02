@@ -189,6 +189,8 @@ void Logger::connectToService(const QString &serviceUUID) {
         connect(channelSubscribeService, &QLowEnergyService::characteristicChanged, this, &Logger::updateWaveValue);
         connect(channelSubscribeService, &QLowEnergyService::descriptorWritten, this,
                 &Logger::confirmedDescriptorWrite);
+        connect(channelSubscribeService, QOverload<QLowEnergyService::ServiceError>::of(&QLowEnergyService::error),
+                this, &Logger::errorService);
         channelSubscribeService->discoverDetails();
         return;
     }
@@ -320,5 +322,9 @@ void Logger::closeEvent(QCloseEvent *event) {
         delete channelSubscribeService;
         channelSubscribeService = nullptr;
     }
+}
+
+void Logger::errorService(QLowEnergyService::ServiceError error) {
+    qWarning() << "Service Error: " << error;
 }
 
