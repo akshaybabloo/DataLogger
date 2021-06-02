@@ -203,11 +203,6 @@ void Logger::connectToService(const QString &serviceUUID) {
 #else
     channelSubscribeService->discoverDetails();
 #endif
-
-    // this will list out services
-    for (const auto &item : service->characteristics()) {
-        qDebug() << item.uuid();
-        qDebug() << item.value();
     }
 }
 
