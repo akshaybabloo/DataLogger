@@ -120,7 +120,7 @@ void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
     services.append(new ServiceInfo(service));
     // TODO: get the service information
 
-    if (serviceUUID == QBluetoothUuid(ChannelDataServiceUUID)){
+    if (serviceUUID == QBluetoothUuid(ChannelDataServiceUUID)) {
         qInfo() << "Channel data service found";
         foundDataChannelService = true;
     }
@@ -311,7 +311,8 @@ void Logger::countFrequency() {
 }
 
 void Logger::closeEvent(QCloseEvent *event) {
-    if (channelSubscribeDesc.isValid() && channelSubscribeService && channelSubscribeDesc.value() == QByteArray::fromHex("0100")){
+    if (channelSubscribeDesc.isValid() && channelSubscribeService &&
+        channelSubscribeDesc.value() == QByteArray::fromHex("0100")) {
         qInfo() << "Unsubscribing channel services";
         channelSubscribeService->writeDescriptor(channelSubscribeDesc, QByteArray::fromHex("0000"));
     } else {
