@@ -64,6 +64,8 @@ private:
 
 private:
     QSettings settings;
+
+    // Bluetooth variables
     QLowEnergyController *controller = nullptr;
     StatusBarIndicator *indicator;
     QList<QObject *> services;

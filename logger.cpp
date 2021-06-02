@@ -110,7 +110,7 @@ void Logger::deviceDisconnected() {
 }
 
 void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
-    qInfo() << "service discovered";
+    qInfo() << "New service discovered";
     QLowEnergyService *service = controller->createServiceObject(serviceUUID);
     if (!service) {
         qWarning() << "Cannot create service for uuid";
