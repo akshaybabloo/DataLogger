@@ -30,7 +30,8 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     connect(controller, &QLowEnergyController::connected, this, &Logger::deviceConnected);
     connect(controller, &QLowEnergyController::disconnected, this, &Logger::deviceDisconnected);
     connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Logger::error);
-    connect(controller, &QLowEnergyController::serviceDiscovered, this, &Logger::addLowEnergyService);
+    connect(controller, &QLowEnergyController::serviceDiscovered, this, &Logger::addLowEnergyService,
+            Qt::QueuedConnection);
     connect(controller, &QLowEnergyController::discoveryFinished, this, &Logger::serviceScanDone);
 
     if (isRandomAddress()) {
@@ -191,9 +192,17 @@ void Logger::connectToService(const QString &serviceUUID) {
                 &Logger::confirmedDescriptorWrite);
         connect(channelSubscribeService, QOverload<QLowEnergyService::ServiceError>::of(&QLowEnergyService::error),
                 this, &Logger::errorService);
-        channelSubscribeService->discoverDetails();
+
+#ifdef Q_OS_WINDOWS
+        // See https://forum.qt.io/topic/127222/issue-with-bluetooth-le-service-discovery-qlowenergyservice-unknownerror
+        QTimer::singleShot(0, [=]() {
+            channelSubscribeService->discoverDetails();
+        });
         return;
     }
+#else
+    channelSubscribeService->discoverDetails();
+#endif
 
     // this will list out services
     for (const auto &item : service->characteristics()) {
