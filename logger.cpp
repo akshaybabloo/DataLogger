@@ -181,7 +181,7 @@ void Logger::connectToService(const QString &serviceUUID) {
 
     qInfo() << serviceUUID;
     if (foundDataChannelService) {
-        channelSubscribeService = controller->createServiceObject(QBluetoothUuid(serviceUUID), this);
+        channelSubscribeService = service;
     }
 
     if (channelSubscribeService) {
@@ -198,10 +198,8 @@ void Logger::connectToService(const QString &serviceUUID) {
         QTimer::singleShot(0, [=]() {
             channelSubscribeService->discoverDetails();
         });
-        return;
-    }
 #else
-    channelSubscribeService->discoverDetails();
+        channelSubscribeService->discoverDetails();
 #endif
     }
 }
