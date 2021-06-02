@@ -119,12 +119,19 @@ void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
     qInfo() << serviceUUID;
     services.append(new ServiceInfo(service));
     // TODO: get the service information
+
+    if (serviceUUID == QBluetoothUuid(ChannelDataServiceUUID)){
+        qInfo() << "Channel data service found";
+        foundDataChannelService = true;
+    }
 }
 
 void Logger::serviceScanDone() {
     qInfo() << "service scan done";
 
-    connectToService(ChannelDataServiceUUID);
+    if (foundDataChannelService) {
+        connectToService(ChannelDataServiceUUID);
+    }
 }
 
 void Logger::error(QLowEnergyController::Error) {
@@ -172,7 +179,10 @@ void Logger::connectToService(const QString &serviceUUID) {
     }
 
     qInfo() << serviceUUID;
-    channelSubscribeService = controller->createServiceObject(QBluetoothUuid(serviceUUID), this);
+    if (foundDataChannelService) {
+        channelSubscribeService = controller->createServiceObject(QBluetoothUuid(serviceUUID), this);
+    }
+
     if (channelSubscribeService) {
         qInfo() << "service object created";
         connect(channelSubscribeService, &QLowEnergyService::stateChanged, this, &Logger::serviceStateChanged);

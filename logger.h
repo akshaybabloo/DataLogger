@@ -76,6 +76,7 @@ private:
     QList<QLineSeries *> lineSeries;
     QValueAxis *axisX = nullptr;
     QValueAxis *axisY = nullptr;
+    bool foundDataChannelService = false;
 
     // get the stream frequency
     QTimer *timer = nullptr;
