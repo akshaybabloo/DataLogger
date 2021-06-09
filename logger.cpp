@@ -48,8 +48,8 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     qChart->addAxis(axisY, Qt::AlignLeft);
 
     axisX->setRange(0, 10.0);
-    axisX->setTickCount(10);
-    axisY->setRange(-2.5, 2.5);
+    axisX->setTickCount(100);
+    axisY->setRange(-3.0, 3.0);
 
     chart = new Chart(qChart);
 
