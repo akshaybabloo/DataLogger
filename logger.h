@@ -48,12 +48,11 @@ private slots:
     void on_actionAbout_DataBlogger_triggered();
     void on_actionSettings_triggered();
     void on_serverButton_toggled(bool checked);
+    void on_saveToFileButton_clicked();
 
     void serviceStateChanged(QLowEnergyService::ServiceState newState);
     void updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value);
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value);
-
-    void on_saveToFileButton_clicked();
 
     void countFrequency();
 
