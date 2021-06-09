@@ -8,6 +8,8 @@
 #include <QList>
 #include <QObject>
 #include <QtCharts/QLineSeries>
+#include <qelapsedtimer.h>
+#include <qtimer.h>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -16,14 +18,19 @@ class Chart : public QObject {
 Q_OBJECT
 public:
     explicit Chart(QObject *parent = 0);
-    void startUpdating(const QList<QLineSeries *> &seriesList, const QList<qreal> &values, qreal windowWidth);
+    void startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth, qreal frequency);
 
-//private slots:
-//    void update(const QLineSeries *seriesList);
+private slots:
+    void updateAllSeries();
 
 private:
     QList<QLineSeries *> c_seriesList;
     QVector<QPointF> m_data;
+    qreal valueCounter = 0;
+    QElapsedTimer timer;
+    QTimer dataUpdater;
+    QVector<QVector<qreal>> tempData;
+    qreal pointCounter = 0;
 
 
 };

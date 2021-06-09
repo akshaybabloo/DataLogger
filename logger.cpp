@@ -252,7 +252,7 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     }
     hexValue = hexValue.trimmed();
 
-    QList<qreal> values;
+    QVector<qreal> values;
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length(); ++i) {
         auto nValue = -hexValueArray[i].toInt(nullptr,
@@ -261,7 +261,7 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
         values.append(vValue);
     }
 
-    qInfo() << values;
+//    qInfo() << values;
     if (lineSeries.length() == 0) {
         qChart->legend()->hide();
         QPen red(Qt::yellow);
@@ -288,8 +288,8 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
         }
     }
 
-    qreal x = qChart->plotArea().width() / axisX->tickCount();
-    chart->startUpdating(lineSeries, values, x);
+//    qreal x = qChart->plotArea().width() / axisX->tickCount();
+    chart->startUpdating(lineSeries, values, qChart->plotArea().width(), frequencyCounter);
 //    qInfo() << qChart->plotArea().width();
 //    qChart->scroll(x, 0);
 }
