@@ -4,10 +4,32 @@ DataLogger is a Bluetooth LE streamer and an HTTP server.
 
 Table of Contents
 
-- [1. Instillation](#1-instillation)
-- [2. Usage](#2-usage)
+- [1. Requirements](#1-requirements)
+- [2. Using vcpkg Package Manager](#2-using-vcpkg-package-manager)
+- [3. Instillation](#3-instillation)
+- [4. Usage](#4-usage)
 
-## 1. Instillation
+## 1. Requirements
+
+1. Qt Framework - download it from [Qt](https://qt.io)
+2. vcpkg - package manager
+   1. On mac install [Homebrew](https://brew.sh/) and do the following
+      1. `brew install vcpkg` - for vcpkg package manager
+      2. `brew install pkg-config` - its an helper to for compiling application see - https://freedesktop.org/wiki/Software/pkg-config/
+   2. on Windows
+      1. TODO
+3. Xcode (only on mac)
+4. Visual Studio 2019 with C++ (only on windows)
+
+## 2. Using vcpkg Package Manager
+
+This project depends on the following external library and they need to be installed first using `vcpkg` from terminal
+
+| Package Name | Instillation Instruction |
+|--------------|--------------------------|
+| Eigen 3.3.*  | vcpkg install eigen3     |
+
+## 3. Instillation
 
 This code depends on Qt 5.15 and this can be downloaded from [Qt](https://qt.io).
 
@@ -30,7 +52,7 @@ And under `Developer and Designer Tools`, select:
 
 > Warning: this application uses OpenGL, make sure you have a compatible hardware for it.
 
-## 2. Usage
+## 4. Usage
 
 1. Open Qt Creator (the IDE that comes with Qt), `File -> Open File or Project...` then select `DataLogger/` folder. 
 2. The IDE should be able to automatically detect `CMakeLists.txt` file and open a configuration view, make sure you select the a configuration that looks like - `Desktop Qt 5.15.* <build type>` - `<build type>` could be `clang 64bit` (mac) or `msvc 64-bit` (windows).
