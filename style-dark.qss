@@ -78,7 +78,7 @@ QLineEdit,
 QPushButton {
   color: #448aff;
   background-color: #31363b;
-  border: 1px solid #448aff;
+  border: 2px solid #448aff;
   border-radius: 4px;
   padding: 8px 16px ;
   height: 18px;
@@ -178,7 +178,7 @@ QComboBox::down-arrow:disabled {
 QComboBox QAbstractItemView {
   background-color: #232629;
   border: 2px solid #4f5b62;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 QComboBox[frame='false'] {
@@ -397,7 +397,6 @@ QGroupBox::title {
   background-color: #31363b;
   background-color: transparent;
   height: 20px;
-  border-radius: 8px;
 }
 
 /*  ------------------------------------------------------------------------  */
@@ -626,7 +625,7 @@ QCalendarWidget QMenu,
 QMenu {
   background-color: #232629;
   border: 2px solid #4f5b62;
-  border-radius: 2px;
+  border-radius: 4px;
   margin-top: 3px;
 }
 
@@ -708,7 +707,7 @@ QToolBox::tab {
   color: #ffffff;
   padding-left: 15px;
   text-transform: uppercase;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 QToolBox::tab:hover {
@@ -1104,7 +1103,6 @@ QHeaderView::section {
   padding: 0 20px;
   height: 35px;
   border-radius: 0px;
-
   border-right: 1px solid;
   border-bottom: 1px solid;
   border-color: #31363b;
@@ -1119,7 +1117,7 @@ QLCDNumber {
   color: #448aff;
   background-color:rgba(68, 138, 255, 0.1);
   border: 1px solid rgba(68, 138, 255, 0.3);
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /*  ------------------------------------------------------------------------  */
@@ -1157,7 +1155,7 @@ QListView QLineEdit {
 QToolTip {
   padding: 5px;
   border: 1px solid #31363b;
-  border-radius: 2px;
+  border-radius: 4px;
   color: #ffffff;
   background-color: #4f5b62;
 }
