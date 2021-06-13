@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 
+if (APPLE)
+    set(CMAKE_TOOLCHAIN_FILE /usr/local/Cellar/vcpkg/2021.05.12/libexec/scripts/buildsystems/vcpkg.cmake
+            CACHE STRING "Vcpkg toolchain file")
+elseif(WIN32)
+    # TODO: set vcpkg path
+endif()
+
 project(DataLogger VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -41,6 +48,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Charts REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
+find_package(Eigen3 CONFIG REQUIRED)
 
 set(PROJECT_SOURCES
         MACOSX_BUNDLE
@@ -84,6 +92,7 @@ target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Bluetooth
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Gui
+        Eigen3::Eigen
         )
 
 if (QT_VERSION_MAJOR EQUAL 6)
