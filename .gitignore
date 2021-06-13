@@ -55,3 +55,9 @@ compile_commands.json
 .idea/
 
 *.aps
+/FindEigen3.cmake
+/graph_info.json
+/conaninfo.txt
+/conanbuildinfo.txt
+/conan_paths.cmake
+/conan.lock

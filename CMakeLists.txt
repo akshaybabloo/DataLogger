@@ -17,6 +17,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(conan_paths.cmake)
 
 # CLion setting. This will not work in Windows.
 if ($ENV{CLION_IDE})
@@ -48,7 +49,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Charts REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
-find_package(Eigen3 CONFIG REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 set(PROJECT_SOURCES
         MACOSX_BUNDLE
