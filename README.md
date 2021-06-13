@@ -4,10 +4,10 @@ DataLogger is a Bluetooth LE streamer and an HTTP server.
 
 Table of Contents
 
-- [Instillation](#instillation)
-- [Usage](#usage)
+- [1. Instillation](#1-instillation)
+- [2. Usage](#2-usage)
 
-## Instillation
+## 1. Instillation
 
 This code depends on Qt 5.15 and this can be downloaded from [Qt](https://qt.io).
 
@@ -30,7 +30,7 @@ And under `Developer and Designer Tools`, select:
 
 > Warning: this application uses OpenGL, make sure you have a compatible hardware for it.
 
-## Usage
+## 2. Usage
 
 1. Open Qt Creator (the IDE that comes with Qt), `File -> Open File or Project...` then select `DataLogger/` folder. 
 2. The IDE should be able to automatically detect `CMakeLists.txt` file and open a configuration view, make sure you select the a configuration that looks like - `Desktop Qt 5.15.* <build type>` - `<build type>` could be `clang 64bit` (mac) or `msvc 64-bit` (windows).
