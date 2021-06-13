@@ -5,29 +5,26 @@ DataLogger is a Bluetooth LE streamer and an HTTP server.
 Table of Contents
 
 - [1. Requirements](#1-requirements)
-- [2. Using vcpkg Package Manager](#2-using-vcpkg-package-manager)
+- [2. Using conan Package Manager](#2-using-conan-package-manager)
 - [3. Instillation](#3-instillation)
 - [4. Usage](#4-usage)
 
 ## 1. Requirements
 
 1. Qt Framework - download it from [Qt](https://qt.io)
-2. vcpkg - package manager
-   1. On mac install [Homebrew](https://brew.sh/) and do the following
-      1. `brew install vcpkg` - for vcpkg package manager
-      2. `brew install pkg-config` - its an helper to for compiling application see - https://freedesktop.org/wiki/Software/pkg-config/
-   2. on Windows
-      1. TODO
+2. conan - package manager - `pip install conan` (Python 3.6+ is needed)
 3. Xcode (only on mac)
 4. Visual Studio 2019 with C++ (only on windows)
 
-## 2. Using vcpkg Package Manager
+## 2. Using conan Package Manager
 
-This project depends on the following external library and they need to be installed first using `vcpkg` from terminal
+This project depends on the following external library and they need to be installed first using `conan` from terminal
 
-| Package Name | Instillation Instruction |
-|--------------|--------------------------|
-| Eigen 3.3.*  | vcpkg install eigen3     |
+| Package Name | Instillation Instruction   |
+|--------------|----------------------------|
+| Eigen 3.3.9  | conan install eigen/3.3.9@ |
+
+These packages are predefined in `conanfile.txt`, before running the application do - `conan install .`
 
 ## 3. Instillation
 
