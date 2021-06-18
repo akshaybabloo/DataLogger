@@ -30,8 +30,12 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     connect(controller, &QLowEnergyController::connected, this, &Logger::deviceConnected);
     connect(controller, &QLowEnergyController::disconnected, this, &Logger::deviceDisconnected);
     connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Logger::error);
+#ifdef Q_OS_WINDOWS
     connect(controller, &QLowEnergyController::serviceDiscovered, this, &Logger::addLowEnergyService,
             Qt::QueuedConnection);
+#else
+    connect(controller, &QLowEnergyController::serviceDiscovered, this, &Logger::addLowEnergyService);
+#endif
     connect(controller, &QLowEnergyController::discoveryFinished, this, &Logger::serviceScanDone);
 
     if (isRandomAddress()) {
