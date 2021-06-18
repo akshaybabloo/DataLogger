@@ -205,7 +205,7 @@ void Logger::connectToService(const QString &serviceUUID) {
 }
 
 void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
-    qInfo() << newState;
+    qInfo() << "New state:" << newState;
     switch (newState) {
         case QLowEnergyService::DiscoveringServices:
             qInfo() << tr("Discovering services...");
