@@ -117,7 +117,7 @@ void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
         qWarning() << "Cannot create service for uuid";
         return;
     }
-    qInfo() << serviceUUID;
+    qInfo() << "Service UUID:" << serviceUUID;
     services.append(new ServiceInfo(service));
     // TODO: get the service information
 
@@ -179,7 +179,7 @@ void Logger::connectToService(const QString &serviceUUID) {
         return;
     }
 
-    qInfo() << serviceUUID;
+    qInfo() << "Data service found" << serviceUUID;
     if (foundDataChannelService) {
         channelSubscribeService = service;
     }
