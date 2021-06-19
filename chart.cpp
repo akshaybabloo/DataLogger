@@ -9,8 +9,7 @@
 Chart::Chart(QObject *parent) : QObject(parent) {
     dataUpdater.setInterval(0);
     dataUpdater.setSingleShot(true);
-    QObject::connect(&dataUpdater, &QTimer::timeout,
-                     this, &Chart::updateAllSeries);
+    QObject::connect(&dataUpdater, &QTimer::timeout, this, &Chart::updateAllSeries);
 }
 
 void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth,
