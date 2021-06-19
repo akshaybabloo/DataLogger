@@ -5,11 +5,16 @@
 #include "chart.h"
 #include <QDebug>
 #include <QRandomGenerator>
+#include <iostream>
+
+using namespace std;
 
 Chart::Chart(QObject *parent) : QObject(parent) {
     dataUpdater.setInterval(0);
     dataUpdater.setSingleShot(true);
     QObject::connect(&dataUpdater, &QTimer::timeout, this, &Chart::updateAllSeries);
+
+    matrix = new MatrixXd(250,24);
 }
 
 void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth,
@@ -20,7 +25,14 @@ void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<
         return;
     }
 
+    auto valuesVector = std::vector<qreal>(values.begin(), values.end());
+    RowVectorXd vector = Map<RowVectorXd, Unaligned>(valuesVector.data(), valuesVector.size());
+//    cout << vector << endl;
+
     c_seriesList = seriesList;
+    matrix->row(valueCounter) = vector;
+//    cout << matrix->row(0) << endl;
+//    cout << "hello" << endl;
 
 //    qreal xAdjustment = 20.0 / (10 * values.length());
 //    qreal yMultiplier = 3.0 / qreal(values.length());
@@ -36,7 +48,7 @@ void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<
 //    }
 //    qInfo() << m_data;
 
-    tempData.append(values);
+//    tempData.append(values);
 
 //    for (int i = 0; i < values.length(); ++i) {
 ////        seriesList[i]->clear();
@@ -67,9 +79,35 @@ void Chart::updateAllSeries() {
     qInfo() << "updates called";
     qInfo() << tempData.length();
 
-    tempData.clear();
+//    tempData.clear();
+    removeZeroRows(*matrix);
+    cout << matrix->colwise().mean() << endl;
+//    exit(0);
 
 //    for (int i = 0; i < c_seriesList.length(); ++i) {
 //        c_seriesList[i]->replace(m_data);
 //    }
+    delete matrix;
+    matrix = nullptr;
+    matrix = new MatrixXd(250, 24);
+}
+
+void Chart::removeZeroRows(Eigen::MatrixXd& mat)
+{
+    Matrix<bool, Dynamic, 1> empty = (mat.array() == 0).rowwise().all();
+
+    size_t last = mat.rows() - 1;
+    for (size_t i = 0; i < last + 1;)
+    {
+        if (empty(i))
+        {
+            mat.row(i).swap(mat.row(last));
+            empty.segment<1>(i).swap(empty.segment<1>(last));
+            --last;
+        }
+        else {
+            ++i;
+        }
+    }
+    mat.conservativeResize(last + 1, mat.cols());
 }
