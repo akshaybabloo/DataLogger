@@ -4,7 +4,6 @@
 
 #include "chart.h"
 #include <QDebug>
-#include <QRandomGenerator>
 #include <iostream>
 
 using namespace std;
