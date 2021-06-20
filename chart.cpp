@@ -19,6 +19,9 @@ Chart::Chart(QObject *parent) : QObject(parent) {
 void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth,
                           qreal frequency) {
 
+    c_seriesList = seriesList;
+    c_windowWidth = windowWidth;
+
     // this will wait to get the frequency first
     if (frequency == 0) {
         return;
@@ -26,66 +29,49 @@ void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<
 
     auto valuesVector = std::vector<qreal>(values.begin(), values.end());
     RowVectorXd vector = Map<RowVectorXd, Unaligned>(valuesVector.data(), (long) valuesVector.size());
-//    cout << vector << endl;
 
-    c_seriesList = seriesList;
     matrix->row(valueCounter) = vector;
-//    cout << matrix->row(0) << endl;
-//    cout << "hello" << endl;
 
-//    qreal xAdjustment = 20.0 / (10 * values.length());
-//    qreal yMultiplier = 3.0 / qreal(values.length());
+    xAdjustment = 20.0 / (10 * values.length());
+    yMultiplier = 3.0 / qreal(values.length());
+
     valueCounter += 1;
-//    qInfo() << windowWidth;
-
-//    for (int i = 0; i < values.length(); i++) {
-//        QVector<QPointF> data;
-//        for (int j = 0; j < seriesList.length(); ++j) {
-//            data.append(QPointF(valueCounter, values[i]));
-//        }
-//        m_data.append(data);
-//    }
-//    qInfo() << m_data;
-
-//    tempData.append(values);
-
-//    for (int i = 0; i < values.length(); ++i) {
-////        seriesList[i]->clear();
-////    seriesList[i].remo
-////
-////        seriesList[i]->append(QPointF(2.5, QRandomGenerator::global()->bounded(5) - 2.5));
-////        qInfo() << seriesList[i]->points().length();
-//
-////        qInfo() << valueCounter;
-//        m_data.append(QPointF(valueCounter, values[i]));
-//    }
-//    qInfo() << m_data.length() << valueCounter;
-//    if (valueCounter > windowWidth) {
-//        m_data.removeFirst();
-//        valueCounter = 0;
-//    }
 
     if (valueCounter == frequency) {
         dataUpdater.start();
-//        qInfo() << tempData;
         valueCounter = 0;
     }
 }
 
 void Chart::updateAllSeries() {
-    pointCounter += 1;
 
     qInfo() << "updates called";
     qInfo() << tempData.length();
 
-//    tempData.clear();
     removeZeroRows(*matrix);
-    cout << matrix->colwise().mean() << endl;
-//    exit(0);
+    RowVectorXd meanData = matrix->colwise().mean().normalized();
 
-//    for (int i = 0; i < c_seriesList.length(); ++i) {
-//        c_seriesList[i]->replace(m_data);
-//    }
+    for (int i = 0; i < meanData.size(); i++) {
+        QVector<QPointF> data;
+        for (int j = 0; j < c_seriesList.length(); ++j) {
+            data.append(QPointF(pointCounter / 2, meanData[i]));
+        }
+        m_data.append(data);
+    }
+
+    qInfo() << m_data.size() << c_windowWidth << pointCounter/2;
+
+    for (auto &i : c_seriesList) {
+        i->replace(m_data);
+    }
+
+    pointCounter += 1;
+
+    if (pointCounter/2 > 10) {
+        m_data.clear();
+        pointCounter = 0;
+    }
+
     delete matrix;
     matrix = nullptr;
     matrix = new MatrixXd(250, 24);

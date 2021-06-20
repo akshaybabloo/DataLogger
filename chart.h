@@ -47,6 +47,9 @@ private:
     QVector<QVector<qreal>> tempData;
     qreal pointCounter = 0;
     MatrixXd *matrix = nullptr;
+    qreal xAdjustment = 0;
+    qreal yMultiplier = 0;
+    qreal c_windowWidth;
 
 private:
     /**
