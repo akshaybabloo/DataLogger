@@ -26,7 +26,7 @@ void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<
     }
 
     auto valuesVector = std::vector<qreal>(values.begin(), values.end());
-    RowVectorXd vector = Map<RowVectorXd, Unaligned>(valuesVector.data(), valuesVector.size());
+    RowVectorXd vector = Map<RowVectorXd, Unaligned>(valuesVector.data(), (long)valuesVector.size());
 //    cout << vector << endl;
 
     c_seriesList = seriesList;
@@ -96,8 +96,8 @@ void Chart::removeZeroRows(Eigen::MatrixXd& mat)
 {
     Matrix<bool, Dynamic, 1> empty = (mat.array() == 0).rowwise().all();
 
-    size_t last = mat.rows() - 1;
-    for (size_t i = 0; i < last + 1;)
+    auto last = mat.rows() - 1;
+    for (long i = 0; i < last + 1;)
     {
         if (empty(i))
         {
