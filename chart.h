@@ -29,7 +29,8 @@ public:
      * @param windowWidth Width of the UI window
      * @param frequency Frequency of the streaming. This will change depending on the OS and the hardware
      */
-    void startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth, qreal frequency);
+    void startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth,
+                       qreal frequency);
 
 private slots:
     /**
@@ -52,7 +53,7 @@ private:
      * Removes an row with 0s in it.
      * @param mat new MatrixXd
      */
-    static void removeZeroRows(Eigen::MatrixXd& mat);
+    static void removeZeroRows(Eigen::MatrixXd &mat);
 
 };
 

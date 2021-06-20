@@ -13,7 +13,7 @@ Chart::Chart(QObject *parent) : QObject(parent) {
     dataUpdater.setSingleShot(true);
     QObject::connect(&dataUpdater, &QTimer::timeout, this, &Chart::updateAllSeries);
 
-    matrix = new MatrixXd(250,24);
+    matrix = new MatrixXd(250, 24);
 }
 
 void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<qreal> &values, qreal windowWidth,
@@ -25,7 +25,7 @@ void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<
     }
 
     auto valuesVector = std::vector<qreal>(values.begin(), values.end());
-    RowVectorXd vector = Map<RowVectorXd, Unaligned>(valuesVector.data(), (long)valuesVector.size());
+    RowVectorXd vector = Map<RowVectorXd, Unaligned>(valuesVector.data(), (long) valuesVector.size());
 //    cout << vector << endl;
 
     c_seriesList = seriesList;
@@ -91,20 +91,16 @@ void Chart::updateAllSeries() {
     matrix = new MatrixXd(250, 24);
 }
 
-void Chart::removeZeroRows(Eigen::MatrixXd& mat)
-{
+void Chart::removeZeroRows(Eigen::MatrixXd &mat) {
     Matrix<bool, Dynamic, 1> empty = (mat.array() == 0).rowwise().all();
 
     auto last = mat.rows() - 1;
-    for (long i = 0; i < last + 1;)
-    {
-        if (empty(i))
-        {
+    for (long i = 0; i < last + 1;) {
+        if (empty(i)) {
             mat.row(i).swap(mat.row(last));
             empty.segment<1>(i).swap(empty.segment<1>(last));
             --last;
-        }
-        else {
+        } else {
             ++i;
         }
     }
