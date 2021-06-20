@@ -52,7 +52,7 @@ private:
      * Removes an row with 0s in it.
      * @param mat new MatrixXd
      */
-    void removeZeroRows(Eigen::MatrixXd& mat);
+    static void removeZeroRows(Eigen::MatrixXd& mat);
 
 };
 
