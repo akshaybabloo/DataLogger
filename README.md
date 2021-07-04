@@ -8,6 +8,7 @@ Table of Contents
 - [2. Using conan Package Manager](#2-using-conan-package-manager)
 - [3. Instillation](#3-instillation)
 - [4. Usage](#4-usage)
+  - [4.1. Streaming Data Over UDP](#41-streaming-data-over-udp)
 
 ## 1. Requirements
 
@@ -54,3 +55,7 @@ And under `Developer and Designer Tools`, select:
 1. Open Qt Creator (the IDE that comes with Qt), `File -> Open File or Project...` then select `DataLogger/` folder. 
 2. The IDE should be able to automatically detect `CMakeLists.txt` file and open a configuration view, make sure you select the a configuration that looks like - `Desktop Qt 5.15.* <build type>` - `<build type>` could be `clang 64bit` (mac) or `msvc 64-bit` (windows).
 3. Clicking on the play button (bottom left) should run the program and open a GUI.
+
+### 4.1. Streaming Data Over UDP
+
+After clicking `Stream Data` button, all the data will be streamed to your `http://localhost:45454`. Clicking on the same button will stop streaming.
