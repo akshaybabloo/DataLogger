@@ -5,6 +5,7 @@
 #include <QtCharts>
 #include <qlowenergycontroller.h>
 #include <widgets/statusbarindicator.h>
+#include <QUdpSocket>
 #include "deviceinfo.h"
 #include "serviceinfo.h"
 #include "chart.h"
@@ -77,6 +78,10 @@ private:
     QValueAxis *axisX = nullptr;
     QValueAxis *axisY = nullptr;
     bool foundDataChannelService = false;
+
+    // For streaming data
+    QUdpSocket *udpSocket = nullptr;
+    bool doStream = false;
 
     // get the stream frequency
     QTimer *timer = nullptr;

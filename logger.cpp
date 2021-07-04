@@ -92,12 +92,16 @@ void Logger::on_actionSettings_triggered() {
 
 void Logger::on_serverButton_toggled(bool checked) {
     if (checked) {
+        udpSocket = new QUdpSocket(this);
         ui->serverButton->setText("Stop Server");
         emit emitServerStatusLabel("server running on 127.0.0.1:1000");
     } else {
+        udpSocket->close();
         ui->serverButton->setText("Start Server");
         emit emitServerStatusLabel("");
     }
+
+    doStream = checked;
 }
 
 void Logger::slotReboot() {
@@ -296,6 +300,10 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     chart->startUpdating(lineSeries, realValues, qChart->plotArea().width(), frequencyCounter);
 //    qInfo() << qChart->plotArea().width();
 //    qChart->scroll(x, 0);
+
+    if (doStream) {
+        udpSocket->writeDatagram(reinterpret_cast<const char *>(realValues.constData()), realValues.size(), QHostAddress::Broadcast, 4545);
+    }
 }
 
 void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
