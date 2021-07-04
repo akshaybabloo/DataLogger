@@ -78,7 +78,7 @@
            <string/>
           </property>
           <property name="text">
-           <string>Start Server</string>
+           <string>Stream Data</string>
           </property>
           <property name="checkable">
            <bool>true</bool>

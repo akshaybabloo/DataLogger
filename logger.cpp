@@ -93,13 +93,13 @@ void Logger::on_actionSettings_triggered() {
 void Logger::on_serverButton_toggled(bool checked) {
     if (checked) {
         udpSocket = new QUdpSocket(this);
-        ui->serverButton->setText("Stop Server");
+        ui->serverButton->setText("Stop Streaming");
         emit emitServerStatusLabel("server running on 127.0.0.1:45454");
     } else {
         udpSocket->close();
         delete udpSocket;
         udpSocket = nullptr;
-        ui->serverButton->setText("Start Server");
+        ui->serverButton->setText("Stream Data");
         emit emitServerStatusLabel("");
     }
 
