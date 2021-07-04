@@ -303,8 +303,13 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
 //    qInfo() << qChart->plotArea().width();
 //    qChart->scroll(x, 0);
 
+    // Converts QVector<double> to QByteArray
+    QByteArray line;
+    QDataStream stream(&line, QIODevice::WriteOnly);
+    stream << realValues;
+
     if (doStream) {
-        udpSocket->writeDatagram(reinterpret_cast<const char *>(realValues.constData()), realValues.size(), QHostAddress::Broadcast, 4545);
+        udpSocket->writeDatagram(line, QHostAddress::Broadcast, 45454);
     }
 }
 
