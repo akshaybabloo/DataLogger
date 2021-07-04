@@ -49,7 +49,7 @@ private slots:
     void on_actionAbout_DataBlogger_triggered();
     void on_actionSettings_triggered();
     void on_serverButton_toggled(bool checked);
-    void on_saveToFileButton_clicked();
+    void on_saveToFileButton_toggled(bool checked);
 
     void serviceStateChanged(QLowEnergyService::ServiceState newState);
     void updateWaveValue(const QLowEnergyCharacteristic &info, const QByteArray &value);
@@ -82,6 +82,10 @@ private:
     // For streaming data
     QUdpSocket *udpSocket = nullptr;
     bool doStream = false;
+
+    // For writing data to file
+    bool isFileOpen = false;
+    QFile *file = nullptr;
 
     // get the stream frequency
     QTimer *timer = nullptr;

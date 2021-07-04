@@ -311,6 +311,20 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     if (doStream) {
         udpSocket->writeDatagram(line, QHostAddress::Broadcast, 45454);
     }
+
+    // Writes to DataLogger-(datetime in GMT).csv
+    if (isFileOpen) {
+        QTextStream out(file);
+        for (int i = 0; i < realValues.length(); ++i) {
+            if (i < realValues.length()) {
+                out << QString("%1,").arg(QString::number(realValues.value(i)));
+            } else {
+                out << QString("%1").arg(QString::number(realValues.value(i)));
+            }
+        }
+        out << Qt::endl;
+        file->flush();
+    }
 }
 
 void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
@@ -320,10 +334,6 @@ void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QB
         delete channelSubscribeService;
         channelSubscribeService = nullptr;
     }
-}
-
-void Logger::on_saveToFileButton_clicked() {
-
 }
 
 void Logger::countFrequency() {
@@ -348,5 +358,23 @@ void Logger::closeEvent(QCloseEvent *event) {
 
 void Logger::errorService(QLowEnergyService::ServiceError error) {
     qWarning() << "Service Error: " << error;
+}
+
+
+void Logger::on_saveToFileButton_toggled(bool checked) {
+    if (checked) {
+        ui->saveToFileButton->setText("Stop Writing");
+        auto fileName = QDir(
+                QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)) +
+                QString("/DataLogger-%1.csv").arg(QDateTime::currentDateTimeUtc().toString()));
+        file = new QFile(fileName.path());
+        file->open(QIODevice::Append | QIODevice::Text);
+    } else {
+        ui->saveToFileButton->setText("Write to File");
+        file->flush();
+        file->close();
+    }
+
+    isFileOpen = checked;
 }
 
