@@ -97,6 +97,8 @@ void Logger::on_serverButton_toggled(bool checked) {
         emit emitServerStatusLabel("server running on 127.0.0.1:45454");
     } else {
         udpSocket->close();
+        delete udpSocket;
+        udpSocket = nullptr;
         ui->serverButton->setText("Start Server");
         emit emitServerStatusLabel("");
     }
