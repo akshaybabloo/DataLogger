@@ -9,6 +9,7 @@ Table of Contents
 - [3. Instillation](#3-instillation)
 - [4. Usage](#4-usage)
   - [4.1. Streaming Data Over UDP](#41-streaming-data-over-udp)
+  - [4.2. Writing to File](#42-writing-to-file)
 
 ## 1. Requirements
 
@@ -58,4 +59,8 @@ And under `Developer and Designer Tools`, select:
 
 ### 4.1. Streaming Data Over UDP
 
-After clicking `Stream Data` button, all the data will be streamed to your `http://localhost:45454`. Clicking on the same button will stop streaming.
+After clicking `Stream Data` button, all the data will be streamed via `http://localhost:45454`. Clicking on the same button will stop streaming.
+
+### 4.2. Writing to File
+
+The default location is the Desktop and the file name is in the format of `DataLogger-<date and time in GMT>`. `Write to File` is a toggle button, clicking it once will write to file and clicking it again will stop it.
