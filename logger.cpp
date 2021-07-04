@@ -262,12 +262,12 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     }
     hexValue = hexValue.trimmed();
 
-    QVector<qreal> realValues;
+    QVector<double> realValues;
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length(); ++i) {
         auto nValue = -hexValueArray[i].toInt(nullptr,
                                               16); // negating value because this gives me positive value (according to c# code)
-        auto vValue = static_cast<qreal>(((nValue * 5) / 65536.0));
+        auto vValue = static_cast<double>(((nValue * 5.0) / 65536.0));
         realValues.append(vValue);
     }
 
