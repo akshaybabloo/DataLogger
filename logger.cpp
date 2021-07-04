@@ -94,7 +94,7 @@ void Logger::on_serverButton_toggled(bool checked) {
     if (checked) {
         udpSocket = new QUdpSocket(this);
         ui->serverButton->setText("Stop Server");
-        emit emitServerStatusLabel("server running on 127.0.0.1:1000");
+        emit emitServerStatusLabel("server running on 127.0.0.1:45454");
     } else {
         udpSocket->close();
         ui->serverButton->setText("Start Server");
