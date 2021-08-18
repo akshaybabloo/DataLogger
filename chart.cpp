@@ -3,8 +3,6 @@
 //
 
 #include "chart.h"
-#include <QDebug>
-#include <iostream>
 
 using namespace std;
 
@@ -45,9 +43,6 @@ void Chart::startUpdating(const QList<QLineSeries *> &seriesList, const QVector<
 
 void Chart::updateAllSeries() {
 
-    qInfo() << "updates called";
-    qInfo() << tempData.length();
-
     removeZeroRows(*matrix);
     RowVectorXd meanData = matrix->colwise().mean().normalized();
 
@@ -58,8 +53,6 @@ void Chart::updateAllSeries() {
         }
         m_data.append(data);
     }
-
-    qInfo() << m_data.size() << c_windowWidth << pointCounter/2;
 
     for (auto &i : c_seriesList) {
         i->replace(m_data);

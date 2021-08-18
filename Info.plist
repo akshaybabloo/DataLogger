@@ -36,7 +36,9 @@
 	<key>UIRequiresFullScreen</key>
 	<false/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>We use Bluetooth LE to connect data logger</string>
+	<string>We use Bluetooth LE to connect data logger device</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>We use local network to send UDP packets</string>
 	<key>AppleMagnifiedMode</key>
 	<false/>
 </dict>

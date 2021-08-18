@@ -92,12 +92,18 @@ void Logger::on_actionSettings_triggered() {
 
 void Logger::on_serverButton_toggled(bool checked) {
     if (checked) {
-        ui->serverButton->setText("Stop Server");
-        emit emitServerStatusLabel("server running on 127.0.0.1:1000");
+        udpSocket = new QUdpSocket(this);
+        ui->serverButton->setText("Stop Streaming");
+        emit emitServerStatusLabel("server running on 127.0.0.1:45454");
     } else {
-        ui->serverButton->setText("Start Server");
+        udpSocket->close();
+        delete udpSocket;
+        udpSocket = nullptr;
+        ui->serverButton->setText("Stream Data");
         emit emitServerStatusLabel("");
     }
+
+    doStream = checked;
 }
 
 void Logger::slotReboot() {
@@ -256,13 +262,13 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     }
     hexValue = hexValue.trimmed();
 
-    QVector<qreal> values;
+    QVector<double> realValues;
     auto hexValueArray = hexValue.split(" ");
     for (int i = 0; i < hexValueArray.length(); ++i) {
         auto nValue = -hexValueArray[i].toInt(nullptr,
                                               16); // negating value because this gives me positive value (according to c# code)
-        auto vValue = static_cast<qreal>(((nValue * 5) / 65536.0));
-        values.append(vValue);
+        auto vValue = static_cast<double>(((nValue * 5.0) / 65536.0));
+        realValues.append(vValue);
     }
 
 //    qInfo() << values;
@@ -270,7 +276,7 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
         qChart->legend()->hide();
         QPen red(Qt::yellow);
         red.setWidth(3);
-        for (int i = 0; i < values.length(); ++i) {
+        for (int i = 0; i < realValues.length(); ++i) {
             auto *series = new QLineSeries;
             series->setUseOpenGL(true);
             series->setPen(red);
@@ -293,9 +299,32 @@ void Logger::updateWaveValue(const QLowEnergyCharacteristic &info, const QByteAr
     }
 
 //    qreal x = qChart->plotArea().width() / axisX->tickCount();
-    chart->startUpdating(lineSeries, values, qChart->plotArea().width(), frequencyCounter);
+    chart->startUpdating(lineSeries, realValues, qChart->plotArea().width(), frequencyCounter);
 //    qInfo() << qChart->plotArea().width();
 //    qChart->scroll(x, 0);
+
+    // Converts QVector<double> to QByteArray
+    QByteArray line;
+    QDataStream stream(&line, QIODevice::WriteOnly);
+    stream << realValues;
+
+    if (doStream) {
+        udpSocket->writeDatagram(line, QHostAddress::Broadcast, 45454);
+    }
+
+    // Writes to DataLogger-(datetime in GMT).csv
+    if (isFileOpen) {
+        QTextStream out(file);
+        for (int i = 0; i < realValues.length(); ++i) {
+            if (i < realValues.length()) {
+                out << QString("%1,").arg(QString::number(realValues.value(i)));
+            } else {
+                out << QString("%1").arg(QString::number(realValues.value(i)));
+            }
+        }
+        out << Qt::endl;
+        file->flush();
+    }
 }
 
 void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QByteArray &value) {
@@ -305,10 +334,6 @@ void Logger::confirmedDescriptorWrite(const QLowEnergyDescriptor &info, const QB
         delete channelSubscribeService;
         channelSubscribeService = nullptr;
     }
-}
-
-void Logger::on_saveToFileButton_clicked() {
-
 }
 
 void Logger::countFrequency() {
@@ -333,5 +358,23 @@ void Logger::closeEvent(QCloseEvent *event) {
 
 void Logger::errorService(QLowEnergyService::ServiceError error) {
     qWarning() << "Service Error: " << error;
+}
+
+
+void Logger::on_saveToFileButton_toggled(bool checked) {
+    if (checked) {
+        ui->saveToFileButton->setText("Stop Writing");
+        auto fileName = QDir(
+                QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)) +
+                QString("/DataLogger-%1.csv").arg(QDateTime::currentDateTimeUtc().toString()));
+        file = new QFile(fileName.path());
+        file->open(QIODevice::Append | QIODevice::Text);
+    } else {
+        ui->saveToFileButton->setText("Write to File");
+        file->flush();
+        file->close();
+    }
+
+    isFileOpen = checked;
 }
 
