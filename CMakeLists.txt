@@ -78,7 +78,9 @@ else ()
             )
 endif ()
 
-set_property(TARGET DataLogger PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
+if (APPLE)
+    set_property(TARGET DataLogger PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
+endif ()
 
 target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
