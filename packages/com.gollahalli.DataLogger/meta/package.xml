@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>DataLogger</DisplayName>
+    <Description>EEG/EMG data logger</Description>
+    <Version>0.0.1</Version>
+    <ReleaseDate>2021-08-18</ReleaseDate>
+    <Licenses>
+        <License name="MIT" file="license.txt" />
+    </Licenses>
+    <Default>script</Default>
+    <Script>installscript.qs</Script>
+    <UserInterfaces>
+        <UserInterface>page.ui</UserInterface>
+    </UserInterfaces>
+</Package>
