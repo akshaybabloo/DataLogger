@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Installer>
+    <Name>DataLogger</Name>
+    <Version>1.0.0</Version>
+    <Title>DataLogger Setup</Title>
+    <Publisher>Akshay Raj Gollahalli</Publisher>
+    <ProductUrl>https://github.com/akshaybabloo/DataLogger</ProductUrl>
+    <TargetDir>@ApplicationsDir@/DataLogger</TargetDir>
+    <RemoveTargetDir>false</RemoveTargetDir>
+</Installer>
