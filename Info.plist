@@ -32,7 +32,7 @@
 	<key>CFBundleName</key>
 	<string>DataLogger</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.1.2</string>
+	<string>0.0.1</string>
 	<key>UIRequiresFullScreen</key>
 	<false/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
