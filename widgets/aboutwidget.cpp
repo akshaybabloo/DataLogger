@@ -12,7 +12,7 @@ AboutWidget::AboutWidget(QWidget *parent) :
     ui->version->setText(tr("v1.0.0"));
 
     auto datetime = QStringLiteral(__DATE__) + QStringLiteral(" ") + QStringLiteral(__TIME__);
-    ui->builtWith->setText(tr("Built with Qt v%1 on %2").arg(QT_VERSION_STR).arg(datetime));
+    ui->builtWith->setText(tr("Built with Qt v%1 on %2").arg(QT_VERSION_STR, datetime));
 
     // TODO: add details here
     QString details = R"(TODO)";
