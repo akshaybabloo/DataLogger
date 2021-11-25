@@ -29,7 +29,6 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
     controller = QLowEnergyController::createCentral(*deviceInfo);
     connect(controller, &QLowEnergyController::connected, this, &Logger::deviceConnected);
     connect(controller, &QLowEnergyController::disconnected, this, &Logger::deviceDisconnected);
-    connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Logger::error);
 #ifdef Q_OS_WINDOWS
     connect(controller, &QLowEnergyController::serviceDiscovered, this, &Logger::addLowEnergyService,
             Qt::QueuedConnection);
@@ -62,7 +61,7 @@ Logger::Logger(QWidget *parent, QBluetoothDeviceInfo *deviceInfo) :
 
     auto theme = settings.value("theme", "light").toString();
     if (theme == "dark") {
-        chartView->chart()->setTheme(QtCharts::QChart::ChartThemeDark);
+        chartView->chart()->setTheme(QChart::ChartThemeDark);
     }
 
     ui->rightLayout->addWidget(chartView);
@@ -122,7 +121,7 @@ void Logger::deviceDisconnected() {
 
 void Logger::addLowEnergyService(const QBluetoothUuid &serviceUUID) {
     qInfo() << "New service discovered";
-    QLowEnergyService *service = controller->createServiceObject(serviceUUID);
+    QLowEnergyService *service = controller->createServiceObject(serviceUUID, this);
     if (!service) {
         qWarning() << "Cannot create service for uuid";
         return;
@@ -200,8 +199,6 @@ void Logger::connectToService(const QString &serviceUUID) {
         connect(channelSubscribeService, &QLowEnergyService::characteristicChanged, this, &Logger::updateWaveValue);
         connect(channelSubscribeService, &QLowEnergyService::descriptorWritten, this,
                 &Logger::confirmedDescriptorWrite);
-        connect(channelSubscribeService, QOverload<QLowEnergyService::ServiceError>::of(&QLowEnergyService::error),
-                this, &Logger::errorService);
 
 #ifdef Q_OS_WINDOWS
         // See https://forum.qt.io/topic/127222/issue-with-bluetooth-le-service-discovery-qlowenergyservice-unknownerror
@@ -217,10 +214,10 @@ void Logger::connectToService(const QString &serviceUUID) {
 void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
     qInfo() << "New state:" << newState;
     switch (newState) {
-        case QLowEnergyService::DiscoveringServices:
+        case QLowEnergyService::RemoteServiceDiscovering:
             qInfo() << tr("Discovering services...");
             break;
-        case QLowEnergyService::ServiceDiscovered: {
+        case QLowEnergyService::RemoteServiceDiscovered: {
             qInfo() << tr("Service discovered.");
 
             const QLowEnergyCharacteristic energyCharacteristic = channelSubscribeService->characteristic(
@@ -230,7 +227,7 @@ void Logger::serviceStateChanged(QLowEnergyService::ServiceState newState) {
                 break;
             }
 
-            channelSubscribeDesc = energyCharacteristic.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            channelSubscribeDesc = energyCharacteristic.descriptor(QBluetoothUuid::DescriptorType::ClientCharacteristicConfiguration);
             if (channelSubscribeDesc.isValid()) {
                 //qInfo() << tr("Service discovered.");
                 channelSubscribeService->writeDescriptor(channelSubscribeDesc, QByteArray::fromHex("0100"));

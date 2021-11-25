@@ -10,8 +10,6 @@
 #include "serviceinfo.h"
 #include "chart.h"
 
-using namespace QtCharts;
-
 namespace Ui {
     class Logger;
 }

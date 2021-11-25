@@ -45,7 +45,6 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setOrganizationDomain("gollahalli.com");
     QCoreApplication::setApplicationName("DataLogger");
 
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
 
     do {

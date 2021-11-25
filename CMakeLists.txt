@@ -14,13 +14,13 @@ include(conan_paths.cmake)
 
 # CLion setting. This will not work in Windows.
 if ($ENV{CLION_IDE})
-    set(QT_VERSION_MAJOR 5)
+    set(QT_VERSION_MAJOR 6)
     # Note: This path needs to be update on every new Qt version
     if (WIN32)
         # For some reason its not working on Windows. Use Qt Creator to make it runnable.
-        set(CMAKE_PREFIX_PATH "C:/Qt/5.15.2/msvc2019_64")
+        set(CMAKE_PREFIX_PATH "C:/Qt/6.2.1/msvc2019_64")
     elseif (APPLE)
-        set(CMAKE_PREFIX_PATH /Users/akshayrajgollahalli/Qt/5.15.2/clang_64)
+        set(CMAKE_PREFIX_PATH /Users/akshayrajgollahalli/Qt/6.2.1/macos)
     endif ()
 endif ()
 
@@ -36,7 +36,7 @@ if (WIN32)
     set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/win.rc")
 endif ()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Bluetooth Network Charts Gui REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Widgets Bluetooth Network Charts Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
@@ -70,6 +70,7 @@ set(PROJECT_SOURCES
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DataLogger
+            MANUAL_FINALIZATION
             ${PROJECT_SOURCES}
             )
 else ()
@@ -81,6 +82,12 @@ endif ()
 if (APPLE)
     set_property(TARGET DataLogger PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 endif ()
+
+set_target_properties(DataLogger PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER datalogger.gollahalli.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        )
 
 target_link_libraries(DataLogger PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets

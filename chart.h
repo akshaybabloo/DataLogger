@@ -12,7 +12,6 @@
 #include <qtimer.h>
 #include <Eigen/Dense>
 
-QT_CHARTS_USE_NAMESPACE
 using namespace Eigen;
 
 class Chart : public QObject {
