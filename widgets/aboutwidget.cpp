@@ -15,7 +15,12 @@ AboutWidget::AboutWidget(QWidget *parent) :
     ui->builtWith->setText(tr("Built with Qt v%1 on %2").arg(QT_VERSION_STR, datetime));
 
     // TODO: add details here
-    QString details = R"(TODO)";
+    QString details = R"(Provided under MIT license
+
+This application uses the following external libraries:
+
+1. Eigen - MPL 2.0 - https://eigen.tuxfamily.org/
+)";
     ui->detailsEdit->setPlainText(details);
 }
 
