@@ -18,9 +18,9 @@ if ($ENV{CLION_IDE})
     # Note: This path needs to be update on every new Qt version
     if (WIN32)
         # For some reason its not working on Windows. Use Qt Creator to make it runnable.
-        set(CMAKE_PREFIX_PATH "C:/Qt/6.2.1/msvc2019_64")
+        set(CMAKE_PREFIX_PATH "C:/Qt/6.2.4/msvc2019_64")
     elseif (APPLE)
-        set(CMAKE_PREFIX_PATH /Users/akshayrajgollahalli/Qt/6.2.1/macos)
+        set(CMAKE_PREFIX_PATH /Users/akshayrajgollahalli/Qt/6.2.4/macos)
     endif ()
 endif ()
 
@@ -37,11 +37,12 @@ if (WIN32)
 endif ()
 
 find_package(QT NAMES Qt6 COMPONENTS Widgets Bluetooth Network Charts Gui REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Bluetooth REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Charts REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Bluetooth REQUIRED)
+find_package(Qt6 COMPONENTS Network REQUIRED)
+find_package(Qt6 COMPONENTS Charts REQUIRED)
+find_package(Qt6 COMPONENTS Gui REQUIRED)
+find_package(Qt6 COMPONENTS Concurrent REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 set(PROJECT_SOURCES
@@ -68,16 +69,10 @@ set(PROJECT_SOURCES
         deviceinfo.cpp deviceinfo.h
         serviceinfo.cpp serviceinfo.h chart.cpp chart.h)
 
-if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(DataLogger
-            MANUAL_FINALIZATION
-            ${PROJECT_SOURCES}
-            )
-else ()
-    add_executable(DataLogger
-            ${PROJECT_SOURCES}
-            )
-endif ()
+qt_add_executable(DataLogger
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+        )
 
 if (APPLE)
     set_property(TARGET DataLogger PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
@@ -90,14 +85,13 @@ set_target_properties(DataLogger PROPERTIES
         )
 
 target_link_libraries(DataLogger PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-        Qt${QT_VERSION_MAJOR}::Charts
-        Qt${QT_VERSION_MAJOR}::Bluetooth
-        Qt${QT_VERSION_MAJOR}::Network
-        Qt${QT_VERSION_MAJOR}::Gui
+        Qt6::Widgets
+        Qt6::Charts
+        Qt6::Bluetooth
+        Qt6::Network
+        Qt6::Gui
+        Qt6::Concurrent
         Eigen3::Eigen
         )
 
-if (QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(DataLogger)
-endif ()
+qt_finalize_executable(DataLogger)
